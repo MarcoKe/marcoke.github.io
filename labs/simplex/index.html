@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linear programming: The Simplex method">
+    <meta name="author" content="Marco Kemmerling">
+
+    <title>The Simplex Method</title>
+
+    <!-- Bootstrap -->
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <!-- 		   -->
+
+    <!--<link href="blog.css" rel="stylesheet" />-->
+    <script type="text/javascript" src="Simplex.js"></script>
+    <script type="text/javascript" src="matrixInput.js"></script>
+
+
+</head>
+<body>
+<!-- JQuery & Bootstrap script files -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<!-- 	-->
+
+<header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand">Marco Kemmerling</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="../">Labs</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<br><br>
+
+
+<div class="container">
+    <div class="row">
+        <h1><small>Linear Programming /</small>
+            <br>The Simplex Method</h1>
+
+        <hr>
+
+        <div class="container">
+            <div class="well well-sm">
+
+                <div class="input-group">
+                    <span class="input-group-btn">
+                    <button onclick="createMatrixInput(); clearSolution()" class="btn btn-default" type="button">Create tableau</button>
+                    </span>
+                    <input id="numvar" type="number" value="5" class="form-control" aria-describedby="variables">
+                    <span class="input-group-addon" id="variables">Variables</span>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <form id="tableauInput" role="form">
+                        <script>createMatrixInput()</script>
+                    </form>
+                </div>
+
+
+                <input type="button" onclick="solve(formToMatrix())" value="Solve" name="calculate" class="btn btn-info">
+
+
+            </div>
+        </div>
+
+        <br>
+
+        <div id="solution"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <hr />
+        <p class="text-muted">&copy; 2016 Marco Kemmerling, content licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a></p>
+
+    </div>
+</footer>
+
+</body>
+</html>

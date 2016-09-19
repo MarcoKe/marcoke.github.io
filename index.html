@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="labsviewApp">
 <head>
 
     <!-- Basic Page Needs
@@ -26,13 +26,16 @@
     <!-- Scripts
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- angularjs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="labs/js/controllers.js"></script>
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.ico">
 
 </head>
-<body>
+<body ng-controller="LabListCtrl">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -70,20 +73,10 @@
         <h3 class="section-heading">Labs</h3>
         <hr>
         <div class="row">
-            <div class="one-third column value">
-                <h6 class="value-multiplier">Bioinformatics</h6>
-                <h5 class="value-heading"><a class="nodec" href="labs/needleman-wunsch/">The Needleman-Wunsch Algorithm</a></h5>
-                <p class="value-description">A dynamic programming algorithm for global sequence alignment.</p>
-            </div>
-            <div class="one-third column value">
-                <h6 class="value-multiplier">Bioinformatics</h6>
-                <h5 class="value-heading"><a class="nodec" href="labs/smith-waterman/">The Smith-Waterman Algorithm</a></h5>
-                <p class="value-description">A dynamic programming algorithm for local sequence alignment.</p>
-            </div>
-            <div class="one-third column value">
-                <h6 class="value-multiplier">Linear Programming</h6>
-                <h5 class="value-heading"><a class="nodec" href="labs/simplex/">The <br>Simplex Method</a></h5>
-                <p class="value-description">The all powerful Simplex method.</p>
+            <div class="one-third column value" ng-repeat="lab in labs" class="thumbnail">
+                <h6 class="value-multiplier">{{lab.category}}</h6>
+                <h5 class="value-heading"><a class="nodec" href={{"labs/"+lab.url}}>{{lab.name}}</a></h5>
+                <p class="value-description">{{lab.description}}</p>
             </div>
         </div>
     </div>

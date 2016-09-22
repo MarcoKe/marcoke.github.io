@@ -45,9 +45,9 @@
 <br><br>
 
 <div class="container">
-    <div class="row">
-        <!-- probably should use masonry -->
-        <form class="form-inline">
+
+
+        <form >
             <div class="input-group">
                 <span class="input-group-addon" id="searchQuery">Search:</span>
                 <input ng-model="query" type="text" value="" class="form-control">
@@ -57,8 +57,8 @@
         </form>
 
         <br><br>
-    </div>
-    <div class="row" style="display:flex; flex-wrap: wrap;">
+
+    <!-- <div class="row" style="display:flex; flex-wrap: wrap;"> -->
         <div>
             <div ng-repeat="lab in labs | filter:query | orderBy:'name'" class="thumbnail">
                 <div class="caption">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 
 </div>

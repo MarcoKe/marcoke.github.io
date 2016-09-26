@@ -17,7 +17,7 @@
 </head>
 <body ng-controller="LabListCtrl">
 <!-- JQuery & Bootstrap script files -->
-<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="jquery-2.1.4.min.js"></script>
 <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 <!-- 	-->
 
@@ -48,9 +48,21 @@
 
 
         <form >
+
             <div class="input-group">
+
                 <span class="input-group-addon" id="searchQuery">Search:</span>
-                <input ng-model="query" type="text" value="" class="form-control">
+                <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Categories <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+                <input ng-model="query" type="text" value="{{categories}}" class="form-control">
 
             </div>
 

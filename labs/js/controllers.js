@@ -22,4 +22,7 @@ labsviewApp.controller('LabListCtrl', function($scope) {
         'description': 'The all powerful Simplex method.',
         'url': 'simplex/'},
     ];
+
+
+    
 });

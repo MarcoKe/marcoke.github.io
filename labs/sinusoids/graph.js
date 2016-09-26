@@ -9,60 +9,95 @@ var yMax = 2;
 var colors = ['#e06c75', '#5089b9', '#d19a66a', '#bb72cca'];
 var currentColor = 0;
 
-function map(inp, inMin, inMax, outMin, outMax) {
-    return outMin + ((outMax - outMin)/(inMax - inMin)) * (inp -inMin);
+
+var c;
+
+
+var Plot = (function () {
+
+
+
+    function map(inp, inMin, inMax, outMin, outMax) {
+        return outMin + ((outMax - outMin)/(inMax - inMin)) * (inp -inMin);
+    }
+
+    function mapX(inp) {
+        return map(inp, xMin, xMax, 0, graph.width());
+    }
+
+    function mapY(inp) {
+        return graph.height() - map(inp, yMin, yMax, 0, graph.height());
+    }
+
+    function line(x,y) {
+        c.lineTo(mapX(x), mapY(y));
+    }
+
+    function move(x,y) {
+        c.moveTo(mapX(x), mapY(y));
+    }
+
+    function changeColor() {
+        c.strokeStyle = colors[currentColor];
+        currentColor = currentColor < colors.length-1 ? currentColor+1 : 0;
+    }
+
+    function drawAxes() {
+        c.strokeStyle = '#fff';
+        c.beginPath();
+        c.moveTo(xPadding+graph.width()/2, 0);
+        c.lineTo(xPadding+graph.width()/2, graph.height() - yPadding);
+        c.moveTo(xPadding, graph.height()/2);
+        c.lineTo(graph.width(), graph.height()/2);
+        c.stroke();
+    }
+
+    function clear() {
+        c.clearRect(0,0,graph.width(),graph.height());
+        drawAxes();
+    }
+
+    function init() {
+        c.linewidth = 1;
+        c.strokeStyle = '#fff';
+        c.textAlign = 'center';
+        drawAxes();
+    }
+
+
+    return {
+        line: line,
+        move: move,
+        changeColor: changeColor,
+        clear: clear,
+        init: init
+    };
+
+})();
+
+
+function clearContents() {
+    Plot.clear();
 }
 
-function mapX(inp) {
-    return map(inp, xMin, xMax, 0, graph.width());
-}
 
-function mapY(inp) {
-    return graph.height() - map(inp, yMin, yMax, 0, graph.height());
-}
-
-function changeColor() {
-    var c = graph[0].getContext('2d');
-    c.strokeStyle = colors[currentColor];
-    currentColor = currentColor < colors.length-1 ? currentColor+1 : 0;
-}
-
-function drawAxes() {
-    var c = graph[0].getContext('2d');
-    c.strokeStyle = '#fff';
-    c.beginPath();
-    c.moveTo(xPadding+graph.width()/2, 0);
-    c.lineTo(xPadding+graph.width()/2, graph.height() - yPadding);
-    c.moveTo(xPadding, graph.height()/2);
-    c.lineTo(graph.width(), graph.height()/2);
-    c.stroke();
-}
 
 function plot(f) {
-    changeColor();
-    var c = graph[0].getContext('2d');
+    Plot.changeColor();
     c.beginPath();
-    c.moveTo(mapX(-10),mapY(f(-10)));
-    for (var i = -1000; i < 1000; i++) {
-        c.lineTo(mapX(i/100), mapY(f(i/100)));
+    Plot.move(-10,f(-10));
+    for (var i = -100; i < 100; i++) {
+        Plot.line(i/10, f(i/10));
     }
     c.stroke();
 }
 
-function clearContents() {
-    var c = graph[0].getContext('2d');
-    c.clearRect(0,0,graph.width(),graph.height());
-    drawAxes();
-}
+
 
 function initialize() {
     graph = $('#graph');
-    var c = graph[0].getContext('2d');
+    c = graph[0].getContext('2d');
+    Plot.init();
 
-    c.linewidth = 1;
-    c.strokeStyle = '#fff';
-    c.textAlign = 'center';
-
-    drawAxes();
     plot(Math.sin);
 }

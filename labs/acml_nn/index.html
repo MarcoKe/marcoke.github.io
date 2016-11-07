@@ -87,7 +87,7 @@ body {
     function drawNode(x,y,radius) {
         context.beginPath();
         context.arc(x,y, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'green';
+        context.fillStyle = 'white';
         context.fill();
         context.lineWidth = 3;
         context.strokeStyle = '#003300';
@@ -108,7 +108,7 @@ body {
     }
 
     function drawLinks(net) {
-        context.lineWidth = 2;
+        context.lineWidth = 3;
         var arr1 = w1.reduce(function (p, c) {
           return p.concat(c);
         });
@@ -119,29 +119,34 @@ body {
 
         var arr = arr1.concat(arr2);
 
-        var maxWeights = Math.max.apply(null, arr); // 9
-        var minWeights = Math.min.apply(null, arr); // 1
+        var maxWeights1 = Math.max.apply(null, arr1); // 9
+        var minWeights1 = Math.min.apply(null, arr1); // 1
+        var maxWeights2 = Math.max.apply(null, arr2); // 9
+        var minWeights2 = Math.min.apply(null, arr2); // 1
 
 
         for (var i = 0; i < net.layers[0].nodes.length; i++) {
             for (var j = 0; j < net.layers[1].nodes.length; j++) {
-                transp = (w1[i][j+1] - minWeights) / (maxWeights - minWeights);
+                transpPos = (w1[i][j+1] - Math.max(0,minWeights1)) / (maxWeights1 - Math.max(0,minWeights1));
+                transpNeg = (w1[i][j+1] - minWeights1) / (Math.min(0,maxWeights1) - minWeights1);
+
 
                 context.beginPath();
                   context.moveTo(net.layers[0].nodes[i].x, net.layers[0].nodes[i].y);
                   context.lineTo(net.layers[1].nodes[j].x, net.layers[1].nodes[j].y);
-                  context.strokeStyle = w1[i][j+1] > 0 ? "rgba(0, 255, 0," + transp + ")" : "rgba(255, 0, 0," + transp + ")";
+                  context.strokeStyle = w1[i][j+1] > 0 ? "rgba(0, 255, 0," + transpPos + ")" : "rgba(255, 0, 0," + transpNeg + ")";
                   context.stroke();
             }
         }
 
         for (var i = 0; i < net.layers[1].nodes.length; i++) {
             for (var j = 0; j < net.layers[2].nodes.length; j++) {
-                transp = (w1[i][j+1] - minWeights) / (maxWeights - minWeights);
+                transpPos = (w2[i][j+1] - Math.max(0,minWeights1)) / (maxWeights1 - Math.max(0,minWeights1));
+                transpNeg = (w2[i][j+1] - minWeights1) / (Math.min(0,maxWeights1) - minWeights1);
                 context.beginPath();
                   context.moveTo(net.layers[1].nodes[i].x, net.layers[1].nodes[i].y);
                   context.lineTo(net.layers[2].nodes[j].x, net.layers[2].nodes[j].y);
-                  context.strokeStyle = w1[i][j+1] > 0 ? "rgba(0, 255, 0," + transp + ")" : "rgba(255, 0, 0," + transp + ")";
+                  context.strokeStyle = w2[i][j+1] > 0 ? "rgba(0, 255, 0," + transpPos + ")" : "rgba(255, 0, 0," + transpNeg + ")";
                   context.stroke();
             }
         }

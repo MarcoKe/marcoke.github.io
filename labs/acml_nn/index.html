@@ -1,101 +1,133 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!DOCTYPE HTML>
+<html>
+<head>
 <style>
-
-text {
-  pointer-events: none;
+body {
+    margin: 0px;
+    padding: 0px;
 }
-
-.node:hover {
-  stroke: #999;
-  stroke-opacity: .6;
-  stroke-width: 4px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
-
 </style>
+</head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script>
+    <canvas id="myCanvas" width=800 height=800></canvas>
+    <script>
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
 
-var width = 960,
-    height = 500,
-    nodeSize = 30;
+    // network architecture
+    var numLayers = 3;
+    var numNodes = [8,3,8];
 
-var color = d3.scale.category20();
+    // why do you not have proper classes javascript?
+    var ann = {};
+    var inputLayer = {};
+    var hiddenLayer = {};
+    var outputLayer = {};
+    var layers = [inputLayer, hiddenLayer, outputLayer];
+    for (var i = 0; i < layers.length; i++) {
+        layers[i].nodes = [];
+        for (var j = 0; j < numNodes[i]; j++) {
+            layers[i].nodes.push({x: 0, y:0});
+        }
+    }
+    ann.layers = layers;
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    console.log(ann.layers[0].nodes.length);
 
-d3.json("data.json", function(error, graph) {
-    var nodes = graph.nodes;
+    ann.initializePositions = function(startx, starty) {
+        for (var i = 0; i < this.layers.length; i++) {
+            for (var j = 0; j < this.layers[i].nodes.length; j++) {
+                n = this.layers[i].nodes[j];
+                n.x = startx * 2*(i+1);
+                n.y = starty * (j+1);
+            }
+        }
+    };
 
-    // get network size
-    var netsize = {};
-    nodes.forEach(function (d) {
-      if(d.layer in netsize) {
-          netsize[d.layer] += 1;
-      } else {
-          netsize[d.layer] = 1;
-      }
-      d["lidx"] = netsize[d.layer];
-    });
+    ann.getNodes = function() {
+        var nodes = [];
+        for (var i = 0; i < this.layers.length; i++) {
+            for (var j = 0; j < this.layers[i].nodes.length; j++) {
+                nodes.push(this.layers[i].nodes[j]);
 
-    // calc distances between nodes
-    var largestLayerSize = Math.max.apply(
-        null, Object.keys(netsize).map(function (i) { return netsize[i]; }));
+            }
+        }
+        return nodes;
+    }
 
-    var xdist = width / Object.keys(netsize).length,
-        ydist = height / largestLayerSize;
+    w1 = [[-0.36, -0.11, 0.39], [2.93, 4.92, -5.83], [1.69, -2.64, 1.09],
+        [-2.31, 4.22, 1.12], [-2.21, -5.87, 1.65], [-1.10, -1.34, -1.74],
+        [4.63, 2.94, 1.12], [-0.48, -2.96, 2.23], [-1.38, 1.31, 4.28]];
 
-    // create node locations
-    nodes.map(function(d) {
-      d["x"] = (d.layer - 0.5) * xdist;
-      d["y"] = (d.lidx - 0.5) * ydist;
-    });
-
-    // autogenerate links
-    var links = [];
-    nodes.map(function(d, i) {
-      for (var n in nodes) {
-        if (d.layer + 1 == nodes[n].layer) {
-          links.push({"source": parseInt(i), "target": parseInt(n), "value": 1}) }
-      }
-    }).filter(function(d) { return typeof d !== "undefined"; });
-
-    // draw links
-    var link = svg.selectAll(".link")
-        .data(links)
-      .enter().append("line")
-        .attr("class", "link")
-        .attr("x1", function(d) { return nodes[d.source].x; })
-        .attr("y1", function(d) { return nodes[d.source].y; })
-        .attr("x2", function(d) { return nodes[d.target].x; })
-        .attr("y2", function(d) { return nodes[d.target].y; })
-        .style("stroke-width", function(d) { return Math.sqrt(d.value); });
-
-    // draw nodes
-    var node = svg.selectAll(".node")
-        .data(nodes)
-      .enter().append("g")
-        .attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")"; }
-        );
-
-    var circle = node.append("circle")
-        .attr("class", "node")
-        .attr("r", nodeSize)
-        .style("fill", function(d) { return color(d.layer); });
+    w2 = [[-1.12, -0.87, -0.96, -1.12, -0.82, -0.96, -1.12, -0.81],
+        [-2.99, -4.14, 1.81, -3.19, -6.33, 1.12, 4.46, -0.02],
+        [2.07, -3.45, -2.03, 2.64, -3.98, -1.97, 2.58, -4.32],
+        [1.49, 1.95, -3.02, 2.77, -2.50, -5.39, 0.33, 0.83]];
 
 
-    node.append("text")
-        .attr("dx", "-.35em")
-        .attr("dy", ".35em")
-        .text(function(d) { return d.label; });
-});
-</script>
+    weights = [w1, w2];
+
+
+    // set node positions
+    var startx = 70;
+    var starty = 70;
+    var radius = 20;
+
+    // var ann = new Net(layers, nodes);
+    // ann.initializePositions(startx, starty);
+    // drawNet(ann);
+    // var ann = new Net(numLayers, numNodes);
+    console.log(ann + "\n");
+    console.log("layers: " + ann.layers.length);
+    console.log("nodes in layer 1: " + ann.layers[0].nodes.length);
+    ann.initializePositions(startx, starty);
+    drawNet(ann);
+
+    function drawNode(x,y,radius) {
+        context.beginPath();
+        context.arc(x,y, radius, 0, 2 * Math.PI, false);
+        context.fillStyle = 'green';
+        context.fill();
+        context.lineWidth = 3;
+        context.strokeStyle = '#003300';
+        context.stroke();
+    }
+
+    function drawNet(net) {
+        var nodes = net.getNodes();
+        for (var i = 0; i < nodes.length; i++) {
+            n = nodes[i];
+            drawNode(n.x, n.y, radius);
+        }
+
+        drawLinks(net);
+
+    }
+
+    function drawLinks(net) {
+        for (var i = 0; i < net.layers[0].nodes.length; i++) {
+            for (var j = 0; j < net.layers[1].nodes.length; j++) {
+                sourcex =
+                context.beginPath();
+                  context.moveTo(net.layers[0].nodes[i].x, net.layers[0].nodes[i].y);
+                  context.lineTo(net.layers[1].nodes[j].x, net.layers[1].nodes[j].y);
+                  context.stroke();
+            }
+        }
+
+        for (var i = 0; i < net.layers[1].nodes.length; i++) {
+            for (var j = 0; j < net.layers[2].nodes.length; j++) {
+                sourcex =
+                context.beginPath();
+                  context.moveTo(net.layers[1].nodes[i].x, net.layers[1].nodes[i].y);
+                  context.lineTo(net.layers[2].nodes[j].x, net.layers[2].nodes[j].y);
+                  context.stroke();
+            }
+        }
+    }
+
+
+
+    </script>
+</body>
+</html>

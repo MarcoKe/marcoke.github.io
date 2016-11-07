@@ -3,6 +3,7 @@
 <head>
 <style>
 body {
+    background-color: #000000;
     margin: 0px;
     padding: 0px;
 }
@@ -94,33 +95,53 @@ body {
     }
 
     function drawNet(net) {
+        drawLinks(net);
+
         var nodes = net.getNodes();
         for (var i = 0; i < nodes.length; i++) {
             n = nodes[i];
             drawNode(n.x, n.y, radius);
         }
 
-        drawLinks(net);
+
 
     }
 
     function drawLinks(net) {
+        context.lineWidth = 2;
+        var arr1 = w1.reduce(function (p, c) {
+          return p.concat(c);
+        });
+
+        var arr2 = w2.reduce(function (p, c) {
+          return p.concat(c);
+        });
+
+        var arr = arr1.concat(arr2);
+
+        var maxWeights = Math.max.apply(null, arr); // 9
+        var minWeights = Math.min.apply(null, arr); // 1
+
+
         for (var i = 0; i < net.layers[0].nodes.length; i++) {
             for (var j = 0; j < net.layers[1].nodes.length; j++) {
-                sourcex =
+                transp = (w1[i][j+1] - minWeights) / (maxWeights - minWeights);
+
                 context.beginPath();
                   context.moveTo(net.layers[0].nodes[i].x, net.layers[0].nodes[i].y);
                   context.lineTo(net.layers[1].nodes[j].x, net.layers[1].nodes[j].y);
+                  context.strokeStyle = w1[i][j+1] > 0 ? "rgba(0, 255, 0," + transp + ")" : "rgba(255, 0, 0," + transp + ")";
                   context.stroke();
             }
         }
 
         for (var i = 0; i < net.layers[1].nodes.length; i++) {
             for (var j = 0; j < net.layers[2].nodes.length; j++) {
-                sourcex =
+                transp = (w1[i][j+1] - minWeights) / (maxWeights - minWeights);
                 context.beginPath();
                   context.moveTo(net.layers[1].nodes[i].x, net.layers[1].nodes[i].y);
                   context.lineTo(net.layers[2].nodes[j].x, net.layers[2].nodes[j].y);
+                  context.strokeStyle = w1[i][j+1] > 0 ? "rgba(0, 255, 0," + transp + ")" : "rgba(255, 0, 0," + transp + ")";
                   context.stroke();
             }
         }

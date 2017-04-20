@@ -73,7 +73,7 @@
         <h3 class="section-heading">Labs</h3>
         <hr>
         <div class="row">
-            <div class="one-third column value" ng-repeat="lab in labs" class="thumbnail">
+            <div class="one-third column value" ng-repeat="lab in labs | limitTo:3" class="thumbnail">
                 <h6 class="value-multiplier">{{lab.category}}</h6>
                 <h5 class="value-heading"><a class="nodec" href={{"labs/"+lab.url}}>{{lab.name}}</a></h5>
                 <p class="value-description">{{lab.description}}</p>

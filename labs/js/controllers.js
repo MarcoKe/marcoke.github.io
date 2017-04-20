@@ -21,6 +21,15 @@ labsviewApp.controller('LabListCtrl', function($scope) {
         'category': 'Linear Programming',
         'description': 'The all powerful Simplex method.',
         'url': 'simplex/'},
+        {'name': 'Canvas Haiku',
+        'category': 'Various',
+        'description': 'Canvas Haiku as proposed on canvashaikus.com',
+        'url': 'canvashaiku/'},
+        {'name': 'Sudoku',
+        'category': 'Games',
+        'description': 'A simple Sudoku solver',
+        'url': 'sudoku/'},
+
     ];
 
 

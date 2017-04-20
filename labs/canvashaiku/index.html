@@ -1,39 +1,81 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Canvas Haiku</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <title>Canvas Haiku</title>
+</head>
 <body>
+    <div class="navbar-spacer"></div>
+    <!-- <nav class="navbar">
+        <div class="container">
+            <ul class="navbar-list">
+                <li class="navbar-item"><a class="navbar-link" href="http://kemmerling.me">Home</a></li>
+            </ul>
+        </div>
+    </nav> -->
+    <nav id="navMenu" ckass="navbar"></nav>
+    <script src="../navbar.js"></script>
 
-<center>
-    <div><h2>Canvas Haiku</h2></div>
-    <div id="container">
-        <canvas id="myCanvas" height="400" width="400"></canvas>
+
+<div class="section categories" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <div><h1>Canvas Haiku</h1></div>
+                <div id="container">
+                    <canvas id="myCanvas" height="400" width="400"></canvas>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+            <div><a href="http://canvashaikus.com">What is a Canvas Haiku?</a></div>
+        </div>
+        </div>
     </div>
+</div>
+<center>
 
-    <div><a href="http://canvashaikus.com">What is a Canvas Haiku?</a></div>
 </center>
 
 <script>
-
-
 var mainCanvas = document.getElementById("myCanvas");
 var mainContext = mainCanvas.getContext('2d');
 
 var canvasWidth = mainCanvas.width;
 var canvasHeight = mainCanvas.height;
 
-var angle = 0;
-
 var requestAnimationFrame = window.requestAnimationFrame ||
                             window.mozRequestAnimationFrame ||
                             window.webkitRequestAnimationFrame ||
                             window.msRequestAnimationFrame;
 
-
 function degToRad(deg) {
     return deg * Math.PI/180;
-}
-
-function drawTree() {
-
 }
 
 function step(branchesX, branchesY, length, angleLeft, angleRight) {
@@ -52,7 +94,6 @@ function step(branchesX, branchesY, length, angleLeft, angleRight) {
 
         drawBranch(branchesX[j], branchesY[j], endpoints.x, endpoints.y);
     }
-    // return {branchesX: branchesXnew, branchesY: branchesYnew, length:    length /= 2};
 
     setTimeout(function() {
         if (length > 1) {
@@ -62,7 +103,6 @@ function step(branchesX, branchesY, length, angleLeft, angleRight) {
             second = true;
         }
     }, 1000/5);
-
 }
 
 function computeEndPoints(startX, startY, length, degrees) {
@@ -80,48 +120,7 @@ function drawBranch(startX, startY, endX, endY) {
     mainContext.lineTo(endX, endY);
     mainContext.stroke();
 }
-// function drawCircle(startx, starty, length) {
-//     if (length > 10)  {
-//         var newX = startx + length * Math.cos(degToRad(315));
-//         var newY = starty + length * Math.sin(degToRad(315));
-//         mainContext.beginPath();
-//         mainContext.moveTo(startx, starty);
-//         mainContext.lineTo(newX, newY);
-//         mainContext.stroke();
-//
-//
-//         var newX2 = startx + length * Math.cos(degToRad(225));
-//         var newY2 = starty + length * Math.sin(degToRad(225));
-//         mainContext.beginPath();
-//         mainContext.moveTo(startx, starty);
-//         mainContext.lineTo(newX2, newY2);
-//         mainContext.stroke();
-//         requestAnimationFrame(drawCircle(newX, newY, length/2));
-//         requestAnimationFrame(drawCircle(newX2, newY2, length/2));
-//     }
-//     // mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
-//     //
-//     // // color in the background
-//     // mainContext.fillStyle = "#EEEEEE";
-//     // mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
-//     //
-//     // // draw the circle
-//     // mainContext.beginPath();
-//     //
-//     // var radius = 25 + 150 * Math.abs(Math.cos(angle));
-//     // mainContext.arc(225, 225, radius, 0, Math.PI * 2, false);
-//     // mainContext.closePath();
-//     //
-//     // // color in the circle
-//     // mainContext.fillStyle = "#006699";
-//     // mainContext.fill();
-//     //
-//     // angle += Math.PI / 64;
-//
-//
-//     // requestAnimationFrame(drawCircle(startx+50, starty+10));
-// }
-// drawTree();
+
 var branchesX=[200];
 var branchesY=[200];
 length = 140;
@@ -130,16 +129,6 @@ step(branchesX, branchesY, length, 45, 135);
 step(branchesX, branchesY, length, 315, 45);
 step(branchesX, branchesY, length, 135, 225);
 
-
-
-
-
-// for (var iter = 0; iter < 10; iter++) {
-//     newParams = requestAnimationFrame(this.step(branchesX, branchesY, length).bind(this));
-//     branchesX = newParams.branchesX;
-//     branchesY = newParams.branchesY;
-//     length = newParams.length;
-// }
 </script>
 
 

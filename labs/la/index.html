@@ -3,21 +3,35 @@
 </head>
 <body>
     <center>
+        <hr>
+        <h1> Matrix Vector Multiplication / Linear Transformations </h1>
   <div id="graph" style="width: 600px; height: 600px"></div>
 
 
 
   basis vectors: a = [1,0], b = [0,1] <br>
   These vectors span the whole of R^2. Every other vector can be expressed as a linear combination of a and b. <br>
-  vector c is a linear combination of a and b: c = 2*a + 3*b = [2, 3] <br><br>
+  vector v is a linear combination of a and b: v = 2*a + 3*b = [2, 3] <br><br>
 
-  if we change the basis to: a = [0, 1], b = [-1, 0] (this corresponds to a 90 degree counter clockwise rotation), c will be rotated in the same way:
+  if we change the basis to: a = [0, 1], b = [-1, 0] (this corresponds to a 90 degree counter clockwise rotation), v will be rotated in the same way:
 
 <div id="graph2" style="width: 600px; height: 600px"></div>
   <script src="la.js"></script>
 
 
-  Instead of changing the basis directly, we could apply a linear transformation. <br> This corresponds to a matrix multiplication: [0 1; -1 0] * c
-  <br> So we can see matrix vector multiplication as changing the basis of the corresponding vector. 
+  Instead of changing the basis directly, we could apply a linear transformation. <br> This corresponds to a matrix multiplication: [0 1; -1 0] * v = 2 [0, 1] + 3 [-1, 0]
+  <br> So we can see matrix vector multiplication as changing the basis of the corresponding vector.
+
+  <hr>
+  <h1>Matrix Multiplication / Composition Of Linear Transformations </h1>
+  M2*M2*v<br>
+  This means: we are first applying the linear transformation M1 to vector v, and then we apply M2 to the result. <br>This, compositional transformation can also be represented in a single matrix: <br>
+  M1*M2
+  <hr>
+  <h1>Determinants</h1>
+
+  <hr>
+  <h1>Eigenvalues And Eigenvectors</h1>
+  <hr>
   </center>
 </body>

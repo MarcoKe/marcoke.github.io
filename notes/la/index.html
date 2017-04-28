@@ -33,6 +33,19 @@ Determinants are the scaling factor of the transformation described by a matrix 
 The determinant of a matrix is 0 iff the column vectors (or row vectors) are linearly independent. <br>
 If a 2x2 matrix A that represents a linear transformation has det(A)=0, then the transformed vectors will not span R^2 anymore ("area is scaled by 0", if we were talking about 3x3 matrix, they wouldn't span R^3 anymore. Instead of a volume, the vectors would span a line or an area).
   <hr>
+  <h1>The Inverse </h1>
+  Consider a system of linear equations: A*x = v, where A and v are given, but we want to know what x is. <br> In other words, we have the outcome, we know the linear transformation, but we do not know what the input was.  <br><br>
+
+  The inverse is the matrix A^-1, where A*A^-1 = I. Using the inverse, we can compute x as follows: <br>
+  x = A^-1 * v  <br> <br>
+
+  Will this always give us a unique solution? No! If the determinant of A is 0, then we know that the space A maps into is "smaller" than the input space. <br>
+  If A transforms the input from a plane onto a line, then how could we possibly recover the original input information just from the output and the transformation?
+  <hr>
+  <h1> Rank of a matrix </h1>
+  We have seen that it is possible for a transformation to squish the input into a lower dimensional space. <br> The "rank" of a matrix describes the dimensionality of the output of such a transformation. 
+
+  <hr>
   <h1>Eigenvalues And Eigenvectors</h1>
   <hr>
   </center>

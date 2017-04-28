@@ -1,0 +1,9 @@
+document.getElementById("navMenu").innerHTML =
+'<div class="container">' +
+    '<ul class="navbar-list">' +
+        '<li class="navbar-item"><a class="navbar-link" href="#home">Home</a></li>' +
+        '<li class="navbar-item"><a class="navbar-link" href="#labs">Labs</a></li>' +
+        '<li class="navbar-item"><a class="navbar-link" href="#contact">Contact</a></li>' +
+        '<li class="navbar-item"><a class="navbar-link" href="#">More</a></li>'+
+    '</ul>' +
+'</div>';

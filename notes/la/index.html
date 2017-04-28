@@ -45,10 +45,14 @@ If a 2x2 matrix A that represents a linear transformation has det(A)=0, then the
 <h1> Column Space </h1>
 The column space is the span of the column vectors of a matrix. <br>
   <hr>
-  <h1> Rank of a matrix </h1>
+  <h1> Rank Of A Matrix </h1>
   We have seen that it is possible for a transformation to squish the input into a lower dimensional space. <br> The "rank" of a matrix describes the dimensionality of the output of such a transformation.   <br>
   The rank is the number of dimensions in the column space. <br>
-  A matrix with "full rank" transforms the input into as high a dimensional space as it can. I.e. for a 2x2 matrix, a full rank matrix transforms the input into output in 2-dimensional space. 
+  A matrix with "full rank" transforms the input into as high a dimensional space as it can. I.e. for a 2x2 matrix, a full rank matrix transforms the input into output in 2-dimensional space.
+<hr>
+<h1> Null Space / Kernel </h1>
+The column space always includes the zero vector since linear transformations must keep the origin fixed in place. <br> For a full rank transformation, the only vector that lands on the origin is the zero vector itself. <br>
+But for matrices that are not full rank, you can have more vectors that land on zero. <br> The set of all vectors that land on the origin after applying the lienar transformation is called the null space of the matrix.
 <hr>
 
   <h1>Eigenvalues And Eigenvectors</h1>

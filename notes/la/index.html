@@ -1,5 +1,12 @@
+<!DOCTYPE html>
+<html>
+
 <head>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <center>
@@ -9,9 +16,10 @@
 
 
 
-  basis vectors: a = [1,0], b = [0,1] <br>
+  basis vectors: $$a = [1,0]^T, b = [0,1]^T$$ <br>
+
   These vectors span the whole of R^2. Every other vector can be expressed as a linear combination of a and b. <br>
-  vector v is a linear combination of a and b: v = 2*a + 3*b = [2, 3] <br><br>
+  vector v is a linear combination of a and b: $$v = 2*a + 3*b = [2, 3]^T$$ <br><br>
 
   if we change the basis to: a = [0, 1], b = [-1, 0] (this corresponds to a 90 degree counter clockwise rotation), v will be rotated in the same way:
 
@@ -24,9 +32,9 @@
 
   <hr>
   <h1>Matrix Multiplication / Composition Of Linear Transformations </h1>
-  M2*M2*v<br>
+  $$M2*M2*v$$<br>
   This means: we are first applying the linear transformation M1 to vector v, and then we apply M2 to the result. <br>This, compositional transformation can also be represented in a single matrix: <br>
-  M1*M2
+  $$M1*M2$$
   <hr>
   <h1>Determinants</h1>
 Determinants are the scaling factor of the transformation described by a matrix <br>
@@ -37,7 +45,7 @@ If a 2x2 matrix A that represents a linear transformation has det(A)=0, then the
   Consider a system of linear equations: A*x = v, where A and v are given, but we want to know what x is. <br> In other words, we have the outcome, we know the linear transformation, but we do not know what the input was.  <br><br>
 
   The inverse is the matrix A^-1, where A*A^-1 = I. Using the inverse, we can compute x as follows: <br>
-  x = A^-1 * v  <br> <br>
+  $$x = A^{-1} * v$$  <br> <br>
 
   Will this always give us a unique solution? No! If the determinant of A is 0, then we know that the space A maps into is "smaller" than the input space. <br>
   If A transforms the input from a plane onto a line, then how could we possibly recover the original input information just from the output and the transformation?
@@ -58,4 +66,8 @@ But for matrices that are not full rank, you can have more vectors that land on 
   <h1>Eigenvalues And Eigenvectors</h1>
   <hr>
   </center>
+  <script>
+    renderMathInElement(document.body, [{left: "$$", right: "$$", display: false}, {left: "\\(", right: "\\)", display: false}]);
+  </script>
 </body>
+</html>

@@ -2,72 +2,82 @@
 <html>
 
 <head>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
 
 </head>
 <body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar"></nav>
+    <script src="../navbar.js"></script>
     <center>
-        <hr>
         <h1> Matrix Vector Multiplication / Linear Transformations </h1>
-  <div id="graph" style="width: 600px; height: 600px"></div>
+        <div id="graph" style="width: 600px; height: 600px"></div>
 
 
 
-  basis vectors: $$a = [1,0]^T, b = [0,1]^T$$ <br>
+        basis vectors: $$a = [1,0]^T, b = [0,1]^T$$ <br>
 
-  These vectors span the whole of R^2. Every other vector can be expressed as a linear combination of a and b. <br>
-  vector v is a linear combination of a and b: $$v = 2*a + 3*b = [2, 3]^T$$ <br><br>
+        These vectors span the whole of R^2. Every other vector can be expressed as a linear combination of a and b. <br>
+        vector v is a linear combination of a and b: $$v = 2*a + 3*b = [2, 3]^T$$ <br><br>
 
-  if we change the basis to: a = [0, 1], b = [-1, 0] (this corresponds to a 90 degree counter clockwise rotation), v will be rotated in the same way:
+        if we change the basis to: a = [0, 1], b = [-1, 0] (this corresponds to a 90 degree counter clockwise rotation), v will be rotated in the same way:
 
-<div id="graph2" style="width: 600px; height: 600px"></div>
-  <script src="la.js"></script>
+        <div id="graph2" style="width: 600px; height: 600px"></div>
+        <script src="la.js"></script>
 
 
-  Instead of changing the basis directly, we could apply a linear transformation. <br> This corresponds to a matrix multiplication: [0 1; -1 0] * v = 2 [0, 1] + 3 [-1, 0]
-  <br> So we can see matrix vector multiplication as changing the basis of the corresponding vector.
+        Instead of changing the basis directly, we could apply a linear transformation. <br> This corresponds to a matrix multiplication: [0 1; -1 0] * v = 2 [0, 1] + 3 [-1, 0]
+        <br> So we can see matrix vector multiplication as changing the basis of the corresponding vector.
 
-  <hr>
-  <h1>Matrix Multiplication / Composition Of Linear Transformations </h1>
-  $$M2*M2*v$$<br>
-  This means: we are first applying the linear transformation M1 to vector v, and then we apply M2 to the result. <br>This, compositional transformation can also be represented in a single matrix: <br>
-  $$M1*M2$$
-  <hr>
-  <h1>Determinants</h1>
-Determinants are the scaling factor of the transformation described by a matrix <br>
-The determinant of a matrix is 0 iff the column vectors (or row vectors) are linearly independent. <br>
-If a 2x2 matrix A that represents a linear transformation has det(A)=0, then the transformed vectors will not span R^2 anymore ("area is scaled by 0", if we were talking about 3x3 matrix, they wouldn't span R^3 anymore. Instead of a volume, the vectors would span a line or an area).
-  <hr>
-  <h1>The Inverse </h1>
-  Consider a system of linear equations: A*x = v, where A and v are given, but we want to know what x is. <br> In other words, we have the outcome, we know the linear transformation, but we do not know what the input was.  <br><br>
+        <hr>
+        <h1>Matrix Multiplication / Composition Of Linear Transformations </h1>
+        $$M2*M2*v$$<br>
+        This means: we are first applying the linear transformation M1 to vector v, and then we apply M2 to the result. <br>This, compositional transformation can also be represented in a single matrix: <br>
+        $$M1*M2$$
+        <hr>
+        <h1>Determinants</h1>
+        Determinants are the scaling factor of the transformation described by a matrix <br>
+        The determinant of a matrix is 0 iff the column vectors (or row vectors) are linearly independent. <br>
+        If a 2x2 matrix A that represents a linear transformation has det(A)=0, then the transformed vectors will not span R^2 anymore ("area is scaled by 0", if we were talking about 3x3 matrix, they wouldn't span R^3 anymore. Instead of a volume, the vectors would span a line or an area).
+        <hr>
+        <h1>The Inverse </h1>
+        Consider a system of linear equations: A*x = v, where A and v are given, but we want to know what x is. <br> In other words, we have the outcome, we know the linear transformation, but we do not know what the input was.  <br><br>
 
-  The inverse is the matrix A^-1, where A*A^-1 = I. Using the inverse, we can compute x as follows: <br>
-  $$x = A^{-1} * v$$  <br> <br>
+        The inverse is the matrix A^-1, where A*A^-1 = I. Using the inverse, we can compute x as follows: <br>
+        $$x = A^{-1} * v$$  <br> <br>
 
-  Will this always give us a unique solution? No! If the determinant of A is 0, then we know that the space A maps into is "smaller" than the input space. <br>
-  If A transforms the input from a plane onto a line, then how could we possibly recover the original input information just from the output and the transformation?
-  <hr>
-<h1> Column Space </h1>
-The column space is the span of the column vectors of a matrix. <br>
-  <hr>
-  <h1> Rank Of A Matrix </h1>
-  We have seen that it is possible for a transformation to squish the input into a lower dimensional space. <br> The "rank" of a matrix describes the dimensionality of the output of such a transformation.   <br>
-  The rank is the number of dimensions in the column space. <br>
-  A matrix with "full rank" transforms the input into as high a dimensional space as it can. I.e. for a 2x2 matrix, a full rank matrix transforms the input into output in 2-dimensional space.
-<hr>
-<h1> Null Space / Kernel </h1>
-The column space always includes the zero vector since linear transformations must keep the origin fixed in place. <br> For a full rank transformation, the only vector that lands on the origin is the zero vector itself. <br>
-But for matrices that are not full rank, you can have more vectors that land on zero. <br> The set of all vectors that land on the origin after applying the lienar transformation is called the null space of the matrix.
-<hr>
+        Will this always give us a unique solution? No! If the determinant of A is 0, then we know that the space A maps into is "smaller" than the input space. <br>
+        If A transforms the input from a plane onto a line, then how could we possibly recover the original input information just from the output and the transformation?
+        <hr>
+        <h1> Column Space </h1>
+        The column space is the span of the column vectors of a matrix. <br>
+        <hr>
+        <h1> Rank Of A Matrix </h1>
+        We have seen that it is possible for a transformation to squish the input into a lower dimensional space. <br> The "rank" of a matrix describes the dimensionality of the output of such a transformation.   <br>
+        The rank is the number of dimensions in the column space. <br>
+        A matrix with "full rank" transforms the input into as high a dimensional space as it can. I.e. for a 2x2 matrix, a full rank matrix transforms the input into output in 2-dimensional space.
+        <hr>
+        <h1> Null Space / Kernel </h1>
+        The column space always includes the zero vector since linear transformations must keep the origin fixed in place. <br> For a full rank transformation, the only vector that lands on the origin is the zero vector itself. <br>
+        But for matrices that are not full rank, you can have more vectors that land on zero. <br> The set of all vectors that land on the origin after applying the lienar transformation is called the null space of the matrix.
+        <hr>
 
-  <h1>Eigenvalues And Eigenvectors</h1>
-  <hr>
-  </center>
-  <script>
+        <h1>Eigenvalues And Eigenvectors</h1>
+        <hr>
+    </center>
+    <script>
     renderMathInElement(document.body, [{left: "$$", right: "$$", display: false}, {left: "\\(", right: "\\)", display: false}]);
-  </script>
+    </script>
 </body>
 </html>

@@ -18,117 +18,117 @@
     <script type="text/javascript">
 
 
-        function calculateProportions() {
-            var amount = document.getElementById("billamount").value;
-            var judithAmount = 0.526 * amount;
-            var gerdAmount = 0.474 * amount;
-            var judith = document.getElementById("judithamount");
-            var gerd = document.getElementById("gerdamount");
-            judith.value = judithAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            gerd.value = gerdAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+    function calculateProportions() {
+        var amount = document.getElementById("billamount").value;
+        var judithAmount = 0.526 * amount;
+        var gerdAmount = 0.474 * amount;
+        var judith = document.getElementById("judithamount");
+        var gerd = document.getElementById("gerdamount");
+        judith.value = judithAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        gerd.value = gerdAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
     </script>
 
     <style>
-        .sequencematch {
-            text-align: center;
-            font-family: monospace;
-            font-size: 18px;
-        }
+    .sequencematch {
+        text-align: center;
+        font-family: monospace;
+        font-size: 18px;
+    }
     </style>
 
 </head>
 <body>
-<!-- JQuery & Bootstrap script files -->
-<script src="jquery-2.1.4.min.js"></script>
-<script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript">
+    <!-- JQuery & Bootstrap script files -->
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
     $(document).ready(function(){
         $('#billamount').keypress(function(e){
             if(e.keyCode==13)
             $('#calcButton').click();
         });
     });
-</script>
-<!-- 	-->
+    </script>
+    <!-- 	-->
 
 
 
 
 
-<br><br>
+    <br><br>
 
-<div class="container">
-    <div class="row">
-        <div class="page-header">
-            <h1>
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1>
 
-                <br>Proporz Berechnung
-            </h1>
-            <div>
-                <hr>
-                <div class="container">
-                    <div class="well well-sm">
-                        <div class="table-responsive">
-                            <form id="sequenceInput" role="form">
-                                <!-- <div align="right">
+                    <br>Proporz Berechnung
+                </h1>
+                <div>
+                    <hr>
+                    <div class="container">
+                        <div class="well well-sm">
+                            <div class="table-responsive">
+                                <form id="sequenceInput" role="form">
+                                    <!-- <div align="right">
                                     <button onclick="setExample(-1)" type="button" class="btn btn-default">Blank
-                                    </button>
-                                    <button onclick="setExample(0)" type="button" class="btn btn-default">Rechnungsbetrag
-                                    </button>
-                                    <button onclick="setExample(1)" type="button" class="btn btn-default">Judith
-                                    </button>
-                                    <button onclick="setExample(1)" type="button" class="btn btn-default">Gerd
-                                    </button>
-                                </div> -->
+                                </button>
+                                <button onclick="setExample(0)" type="button" class="btn btn-default">Rechnungsbetrag
+                            </button>
+                            <button onclick="setExample(1)" type="button" class="btn btn-default">Judith
+                        </button>
+                        <button onclick="setExample(1)" type="button" class="btn btn-default">Gerd
+                    </button>
+                </div> -->
 
-                                <br>
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="sequence1">Rechnungsbetrag</span>
-                                    <input id="billamount" type="text" value="" class="form-control"
-                                           aria-describedby="sequence1">
-                                </div>
-                                <br>
-                                <input type="button" id="calcButton" onclick="calculateProportions()" value="Anteile berechnen" name="calculate"
-                                       class="btn btn-info">
-
-
-
-                                <br>
-
-
-                            </form>
-
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sequence2">Anteil Judith:</span>
-                                <input id="judithamount" type="text" value="" class="form-control"
-                                       aria-describedby="sequence2">
-                            </div>
-
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sequence2">Anteil Gerd:</span>
-                                <input id="gerdamount" type="text" value="" class="form-control"
-                                       aria-describedby="sequence2">
-                            </div>
-                        </div>
-                    </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sequence1">Rechnungsbetrag</span>
+                    <input id="billamount" type="text" value="" class="form-control"
+                    aria-describedby="sequence1">
                 </div>
                 <br>
+                <input type="button" id="calcButton" onclick="calculateProportions()" value="Anteile berechnen" name="calculate"
+                class="btn btn-info">
 
-                <div id="solution"></div>
 
+
+                <br>
+
+
+            </form>
+
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="sequence2">Anteil Judith:</span>
+                <input id="judithamount" type="text" value="" class="form-control"
+                aria-describedby="sequence2">
+                <span class="input-group-addon" id="sequence2">52,6 &percnt;</span>
+            </div>
+
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="sequence2">Anteil Gerd:</span>
+                <input id="gerdamount" type="text" value="" class="form-control"
+                aria-describedby="sequence2">
+                <span class="input-group-addon" id="sequence2">47,4 &percnt;</span>
             </div>
         </div>
+    </div>
+</div>
+<br>
 
-        <footer>
-            <div class="container">
-                <hr/>
-                <p class="text-muted">&copy; 2017 Marco Kemmerling, content licensed under <a
-                        href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a></p>
-            </div>
-        </footer>
+</div>
+</div>
+
+<footer>
+    <div class="container">
+        <hr/>
+        <p class="text-muted">&copy; 2017 Marco Kemmerling, content licensed under <a
+            href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a></p>
+        </div>
+    </footer>
 
 </body>
 </html>

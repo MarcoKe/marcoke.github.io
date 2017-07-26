@@ -22,8 +22,8 @@
         var amount = document.getElementById("billamount").value;
         amount = amount.replace(/\./gi, '');
         amount = amount.replace(/,/gi, '.');
-        var judithAmount = 0.526 * amount;
-        var gerdAmount = 0.474 * amount;
+        var judithAmount = 0.53 * amount;
+        var gerdAmount = 0.47 * amount;
         var judith = document.getElementById("judithamount");
         var gerd = document.getElementById("gerdamount");
         // judith.value = judithAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -115,7 +115,7 @@
             <div class="input-group">
                 <span class="input-group-addon" id="sequence2">Anteil Judith:</span>
                 <input id="judithamount" type="text" value="" class="form-control"
-                aria-describedby="sequence2">
+                aria-describedby="sequence2" readonly>
                 <span class="input-group-addon" id="sequence2">52,6 &percnt;</span>
             </div>
 

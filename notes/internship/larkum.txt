@@ -1,0 +1,16 @@
+A cellular mechanism for cortical associations: an organising principe for the cerebral cortex
+
+Abstract:
+- ability to freely associate aspects of perceived experience with an internal representation of the world & ability to make prediction about the future are a basic feature of the cortex
+- hypothesis: performance derives from an associative mechanism at the cellular level of basic cortical neuronal unit: the pyramidal cell
+- ————————————————————
+- view: cellular properties and architecture of the cortex are highly coupled
+- seemingly bizarre architecture of the cortex:
+    - sensory input terminates in the middle layers
+    - information form other parts of the cortex (feedback stream) tends to project to outer layers
+    - also applies to thalamus (gateway for feed forward sensory information to the cortex and hub for feedback interaction between cortical regions
+- Thalamus:
+    - (sensory input) relay regions of thalamus project to relatively specific region of the cortex (“specific nuclei”)
+    - but most areas of the thalamus receive input predominantly from the cortex and project back to it in a relatively non specific fashion (“non-specific nuclei”).
+
+There is tons of stuff about Calcium thingies that goes completely over my head. Should I try to understand this?

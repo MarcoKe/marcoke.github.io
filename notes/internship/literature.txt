@@ -5,3 +5,5 @@ Goodhill, G. J., & Carreira-Perpiñan, M. A. (2002). Discovery of columnar organ
 Mumford, D. (1991). On the computational architecture of the neocortex - I. The role of the thalamo-cortical loop. Biological Cybernetics, 65(2), 135–145. http://doi.org/10.1007/BF00202389
 
 Markram, H., Toledo-Rodriguez, M., Wang, Y., Gupta, A., Silberberg, G., & Wu, C. (2004). Interneurons of the neocortical inhibitory system. Nature Reviews Neuroscience, 5(10), 793–807. http://doi.org/10.1038/nrn1519
+
+Larkum, M. (2013). A cellular mechanism for cortical associations: An organizing principle for the cerebral cortex. Trends in Neurosciences, 36(3), 141–151. http://doi.org/10.1016/j.tins.2012.11.006

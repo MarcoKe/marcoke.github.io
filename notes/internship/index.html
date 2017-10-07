@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar"><script src="../navbar.js"></script></nav>
+
+    <div  style="width: 60%; margin: 0 auto; ">
+    <h1>Contents: </h1>
+    <ul>
+    <li><a href="#pyrneu">Pyramidal Neurons</a> </li>
+    <li><a href="#matmul">Matrix Multiplication / Composition Of Linear Transformations </a> </li>
+    <li><a href="#det">Determinants </a> </li>
+    <li><a href="#inverse">Inverse </a> </li>
+    <li><a href="#colspace">Column Space </a> </li>
+    <li><a href="#rank">Rank</a> </li>
+    <li><a href="#nullspace">Null Space / Kernel</a> </li>
+    <li><a href="#eig">Eigenvectors And Eigenvalues</a> </li>
+    </ul>
+    <!-- <center> -->
+
+        <h1 id="pyrneu"> Pyramidal Neurons </h1>
+        As the name suggests, pyramidal neurons have a cell body (or <em>soma</em>) shaped like a pyramid. This cell body is said to have a <em>base</em> at the bottom and an <em>apex</em> at the top. <br>
+        <center><img src="img/apexbase.png"></center>
+
+        <br>
+        Pyramidal neurons have two groups of dendrites that appear both functionally and spatially different: <em>basal dendrites</em>, originating at the base of the soma, and one <em>apical dendrite</em>, originating at the apex of the soma. This apical dendrite terminates in what is called the <em>apical tuft</em>. <br>
+
+        Basal dendrites receive regular feed-forward input, while the apical tuft dendrites receive feed-back input. <br> <br>
+
+        <center><img src="img/pyr.png" width="700"></center> <br> <br>
+
+        There appear to be two action potential initiation zones, one near the axon and on near the tuft. 
+
+
+    <!-- </center> -->
+</div>
+    <script>
+    renderMathInElement(document.body, [{left: "$$", right: "$$", display: false}, {left: "\\(", right: "\\)", display: false}]);
+    </script>
+</body>
+</html>

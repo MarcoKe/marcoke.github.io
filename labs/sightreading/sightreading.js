@@ -11,9 +11,10 @@ var div = document.getElementById("notation")
 var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
 // Configure the rendering context.
-renderer.resize(210, 150);
+renderer.resize(310, 250);
 var context = renderer.getContext();
 context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+context.scale(1.5,1.5);
 
 // Create a stave of width 200 at position 0, 40 on the canvas.
 var stave = new VF.Stave(0, 40, 200);

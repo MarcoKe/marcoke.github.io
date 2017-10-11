@@ -2,12 +2,20 @@ body {
     text-align: center;
 }
 
-/* #notes {
-    margin-left: -100px;
-} */
+#notes {
+    width: 310px;
+    margin: 0 auto;
+    text-align: center;
+    display: table;
+   
+}
 
 #stats {
     margin-top: 20px;
+}
+
+button {
+    width: 40px;
 }
 
 button:focus {

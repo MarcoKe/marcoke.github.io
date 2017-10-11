@@ -1,0 +1,37 @@
+body {
+    text-align: center;
+}
+
+/* #notes {
+    margin-left: -100px;
+} */
+
+#stats {
+    margin-top: 20px;
+}
+
+button:focus {
+    outline: none;
+    box-shadow:none;
+    border-color:transparent;
+    background-color: white;
+}
+
+button:active {
+    outline: none;
+    box-shadow:none;
+    border-color:transparent;
+}
+
+button:visited {
+    outline: none;
+    box-shadow:none;
+    border-color:transparent;
+}
+
+button:checked {
+    outline: none;
+    box-shadow:none;
+    border-color:transparent;
+}
+

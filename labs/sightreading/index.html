@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sightreading</title>
+
+        <link rel="stylesheet" href="style.css">
+        
+        <script src="vexflow-min.js"></script>
+        
+    </head>
+
+    <body>
+        
+        <div id="notation">        
+        </div>
+        <div id="notes">
+            <button id="c" onclick="submitNote('c')">C</button>
+            <button id="d" onclick="submitNote('d')">D</button>
+            <button id="e" onclick="submitNote('e')">E</button>
+            <button id="f" onclick="submitNote('f')">F</button>
+            <button id="g" onclick="submitNote('g')">G</button>
+            <button id="a" onclick="submitNote('a')">A</button>
+            <button id="b" onclick="submitNote('b')">B</button>
+        </div>
+        <div id="success"></div>
+        
+        <div id="stats">
+            Accuracy: <span id="accuracy"></span>
+        </div>
+        <script src="sightreading.js"></script> 
+    </body>
+
+</html>

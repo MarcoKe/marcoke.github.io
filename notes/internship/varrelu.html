@@ -72,6 +72,7 @@
         As there are no obvious values to assign to \(\beta_{max}\) and \(\eta\), they will be treated as hyperparameters. However, examining how \(\beta_{max}\) affects the 
         frequency \(f\) gives us some indication as to what values lie in a sensible range. Setting \(\beta_{max}\) to \(1\) results in a division by \(0\) and should 
         thus be avoided. Giving \(\beta_{max}\) a value greater than \(1\) causes our ReLu to "flip", i.e. a negative slope means that we start with a high frequency 
+        (for no input at all)  
         which then decreases as the input increases, which does not seem sensible. Now we have narrowed the range down to \(\beta_{max} < 1\), but we should further see 
         that it is <em>sufficiently</em> smaller than \(1\), since \(\frac{1}{1-\beta_{max}}\) approaches infinity as \(\beta_{max}\) approaches \(1\) and arbitrarily large slopes do 
         not appear to be consistent with biological observations. 

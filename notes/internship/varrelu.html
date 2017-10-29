@@ -41,7 +41,7 @@
 
         where \(f\) is the firing rate of the neuron, \(g\) the gain, \(\mu_S\) the average somatic current (i.e. feedforward input), \(\mu_D\) the average distal
         current (i.e. feedback input), \(\alpha\) is an attenuation factor, \(\sigma\) represents fluctuations in the current, \(\theta\) is the firing threshold, 
-        and \(\beta(\mu_D)\) is an increasing function of the dendritic mean current which saturates for values above 1000pA.
+        and \(\beta(\mu_D)\) is an increasing function of the dendritic mean current which saturates for values above \(1000\)pA.
         <br><br>
         We want to model this relationship through a Rectified Linear Unit (ReLu) by simplifying it as much as possible while retaining the property that 
         the slope of the activation function is controlled by the feedback input. Note that the gain and threshold can be dropped from the equation in any case, 
@@ -62,7 +62,7 @@
         \(\beta_{max}\) that the function can produce, as well as on a threshold which describes when this maximum value is reached. 
         The 1000pA described in <a href="#larkum2004">[0]</a> is of course meaningless for our purposes, but we still need to define some saturation threshold \(\eta\).
         <br><br> 
-        Modelling the part of \(\beta(\mu_D)\) before the saturation threshold as a linear function, we get: 
+        By modelling the part of \(\beta(\mu_D)\) before the saturation threshold as a linear function, we get: 
 
         $$\beta(\mu_D) = min\bigg(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max}\bigg)$$
 
@@ -73,7 +73,7 @@
         frequency \(f\) gives us some indication as to what values lie in a sensible range. Setting \(\beta_{max}\) to \(1\) results in a division by \(0\) and should 
         thus be avoided. Giving \(\beta_{max}\) a value greater than \(1\) causes our ReLu to "flip", i.e. a negative slope means that we start with a high frequency 
         which then decreases as the input increases, which does not seem sensible. Now we have narrowed the range down to \(\beta_{max} < 1\), but we should further see 
-        that it is <em>sufficiently</em> smaller than 1, as \(\frac{1}{1-\beta_{max}}\) approaches infinity as \(\beta_{max}\) approaches 1 and arbitrarily large slopes do 
+        that it is <em>sufficiently</em> smaller than 1, since \(\frac{1}{1-\beta_{max}}\) approaches infinity as \(\beta_{max}\) approaches 1 and arbitrarily large slopes do 
         not appear to be consistent with biological observations. 
         <br></br>
         Hence, as a rule of thumb, to get a sensible \(\beta\) function, we should set $$\beta_{max}\ << 1$$

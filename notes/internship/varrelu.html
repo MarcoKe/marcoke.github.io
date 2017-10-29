@@ -57,10 +57,10 @@
         $$\iff f = \frac{1}{1-\beta(\mu_D)} \mu_S$$
 
         <br> 
-        What remains is the exact definition of \(\beta(\mu_D)\). We know from <a href="#larkum2004">[0]</a> that it should be "an increasing function of the dendritic mean current µ which saturates for values above 1000pA". 
+        What remains is the exact definition of \(\beta(\mu_D)\). We know from <a href="#larkum2004">[0]</a> that it should be "an increasing function of the dendritic mean current \(\mu\) which saturates for values above \(1000\)pA". 
         In other words, the function is bounded, i.e. we cannot increase the gain to arbitrarily high values. Accordingly, we need to decide on some maximum value 
         \(\beta_{max}\) that the function can produce, as well as on a threshold which describes when this maximum value is reached. 
-        The 1000pA described in <a href="#larkum2004">[0]</a> is of course meaningless for our purposes, but we still need to define some saturation threshold \(\eta\).
+        The \(1000\)pA described in <a href="#larkum2004">[0]</a> is of course meaningless for our purposes, but we still need to define some saturation threshold \(\eta\).
         <br><br> 
         By modelling the part of \(\beta(\mu_D)\) before the saturation threshold as a linear function, we get: 
 
@@ -73,7 +73,7 @@
         frequency \(f\) gives us some indication as to what values lie in a sensible range. Setting \(\beta_{max}\) to \(1\) results in a division by \(0\) and should 
         thus be avoided. Giving \(\beta_{max}\) a value greater than \(1\) causes our ReLu to "flip", i.e. a negative slope means that we start with a high frequency 
         which then decreases as the input increases, which does not seem sensible. Now we have narrowed the range down to \(\beta_{max} < 1\), but we should further see 
-        that it is <em>sufficiently</em> smaller than 1, since \(\frac{1}{1-\beta_{max}}\) approaches infinity as \(\beta_{max}\) approaches 1 and arbitrarily large slopes do 
+        that it is <em>sufficiently</em> smaller than \(1\), since \(\frac{1}{1-\beta_{max}}\) approaches infinity as \(\beta_{max}\) approaches \(1\) and arbitrarily large slopes do 
         not appear to be consistent with biological observations. 
         <br></br>
         Hence, as a rule of thumb, to get a sensible \(\beta\) function, we should set $$\beta_{max}\ << 1$$

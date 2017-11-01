@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="../navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Autoencoder with feedback controlled ReLu slope on MNIST</h1>
+
+        <h4>Setup</h4>
+        The architecture consists of an input layer, followed by two encoding layers, followed by two decoding layers. 
+        The input has dimension (1x784), the first encoding layer (E1) outputs data of dimension (1x392), the second (E2) of dimension (1x196), the first decoding layer (D1)
+        of dimension (1x392) and the second decoding layer (D2) restores the data back to its original dimension. 
+        <center><img src="img/AutoEnc.png" height="200"></center>
+
+        Since we have a feedback connection going from D1 to E1, we need to unroll the network such that the input data is passed through the network twice and the feedback
+        connection is only active on the second pass: 
+        <center><img src="img/AutoEncUnrolled.png" height="250"> <br> 
+        <em>(here the left and right "columns" correspond to the first and second timestep, respectively)</em></center>
+        <br> 
+        The weights in the network remain the same regardless of the current timestep. <br>
+        The feedback connection is different from the other connections in that it does not contribute to the input of the encoding layer directly, but changes the slope of
+        its ReLu activation function, as described <a href="varrelu.html">here</a>. <br>
+
+        The modified ReLu takes the form: 
+        $$f(\mu_S, \mu_D) = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})}$$
+
+        with parameters chosen as \(\eta=20\) and \(\beta_{max}=\frac{2}{3}\).
+        <br><br>
+        Three models were trained and compared: <br>
+         <strong>Single Loss Feedback AE (SLFAE)</strong>: the above described model with a log loss function that takes the output of D2 at timestep t=2 as an input <br> 
+         <strong>Dual Loss Feedback AE (DLFAE)</strong>: the above described model with a loss function comprised of a weighted sum of log loss functions that take the output of D2 at timestep t=2 <em>and</em> t=1: 
+        
+         $$loss = log\_loss(D2_{t=2}) + 0.9 \ log\_loss(D2_{t=1})$$ <br> 
+         <strong>Standard AE</strong>: a standard autoencoder consisting only of the left column of the above figure (and hence 
+        with a log loss function taking the output of D2 at timestep t=1 as an input).
+        
+        
+        <br> 
+
+        <h4>Results</h4>
+        The figures below depict the convergence behaviour as loss over time, evaluated on both training and test set, for all three models: <br> 
+        <center>
+            <img src="img/exp1/singleloss.png"><img src="img/exp1/dualloss.png"><img src="img/exp1/standardaeloss.png">
+        </center>
+
+        Clearly, the convergence behaviour does not differ much across models. Note that the loss values are higher in the second figure due to the 
+        weighted sum loss function. <br> <br>
+
+        <hr>
+
+        For a more direct comparison between the models, the loss curves are superimposed in the following: <br> 
+        <center>
+            <img src="img/exp1/trainingloss_compare.png"><img src="img/exp1/testloss_compare.png">
+        </center>
+
+        Note that the loss values for the DLFAE are divided by \(1.9\) to account for the overall higher loss caused by the employed loss function. 
+        Even after this adjustment, the DLFAE's performance is slightly worse than that of the other two models (which in turn appear almost identical to each other). 
+
+        <br> <br> 
+        <hr>
+
+        Some examples of images reconstructed by the different models, at different stages of training, are shown below. For the feedback autoencoders, reconstructed images are provided for the first pass (i.e. t=1),
+        second pass (i.e. t=2), as well as the absolute difference between the two. 
+        <!-- </center> -->
+    </div>
+        <center><img src="img/aemnistcomparison.png" style="flex: none"></center>
+    
+    
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

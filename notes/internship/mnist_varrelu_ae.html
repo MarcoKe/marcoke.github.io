@@ -44,7 +44,7 @@
         <br> 
         The weights in the network remain the same regardless of the current timestep. <br>
         The feedback connection is different from the other connections in that it does not contribute to the input of the encoding layer directly, but changes the slope of
-        its ReLu activation function, as described <a href="varrelu.html">here</a>. <br>
+        its ReLu activation function, as described <a href="varrelu.html">here</a>. Each node in E1 receives exactly one feedback value from its counterpart in D1. <br>
 
         The modified ReLu takes the form: 
         $$f(\mu_S, \mu_D) = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})}$$

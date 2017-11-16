@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Reduced Contrast</h1>
+        Images with reduced contrast are presented to the trained (on regular contrast images) network from the previous experiment, to see if the second pass can reconstruct an 
+        image that is more akin to a regular contrast image. 
+        
+        <br> <br> 
+        To reduce the contrast each pixel of the image is multiplied by some contrast factor. In the following, each pixel was multiplied by 0.5, i.e. each pixels 
+        has values in the range [0.0, 0.5] instead of [0.0, 1.0]. <br> 
+        <strong>First pass reconstruction: </strong>
+        <center><img src="img/exp3/firstpass.png"> </center><br> 
+            <strong>Second pass reconstruction: </strong>
+        <center><img src="img/exp3/secondpass.png"></center> <br> 
+         
+        The second pass reconstruction has a mean pixel value of 0.0617, while the first pass reconstruction has a mean pixel value of 0.0468. 
+        So while the second pass reconstruction is on average brighter and there is thus a higher contrast between "active" and "non-active" pixels, 
+        it is not able to restore the image to its original contrast. 
+        <br><br> 
+        The following shows the absolute difference in mean pixel value between the two reconstructions as a function of different contrast factors (from 0.1 to 1)
+            <center> <img src="img/exp3/diff.png"></center>
+        </center>
+    </div>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

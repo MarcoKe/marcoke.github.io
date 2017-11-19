@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Tuning \(\eta\) and \(\beta_{max}\)</h1>
+        To investigate the effects of different \(\eta\) and \(\beta_{max}\) values, 
+        a grid search with \(\eta = [5, 10, 15, ..., 50]\) and \(\beta_{max} = [0.1, 0.2, ..., 0.8]\) was performed. 
+
+        <br><br> 
+        In the following, each figure shows the validation set performance for a fixed value of \(\eta\) and 
+        varying values of \(\beta_{max}\): 
+        <center> 
+            <img src="img/exp5/eta5.png">
+            <img src="img/exp5/eta10.png">
+            <img src="img/exp5/eta15.png">
+            <img src="img/exp5/eta20.png">
+            <img src="img/exp5/eta25.png">
+            <img src="img/exp5/eta30.png">
+            <img src="img/exp5/eta35.png">
+            <img src="img/exp5/eta40.png">
+            <img src="img/exp5/eta45.png">
+            <img src="img/exp5/eta50.png">
+        </center>
+
+        Higher values of \(\eta\) show less variation, which is explained by 
+        a higher sensitivity to \(\beta_{max}\) when \(\eta\) is low. 
+        <br><br> 
+
+        In every figure, \(0.8\), the highest value for \(\beta_{max}\) shows the 
+        best performance. 
+
+        Thus, in the following we compare varying \(\eta\)s for \(\beta_{max} = 0.8\):
+        <center> 
+            <img src="img/exp5/betamax0.8.png">
+        </center>
+
+        <br><br> 
+
+        Clearly, the combination of \(\eta = 5 \), \(\beta_{max}=0.8\) emerges as 
+        the winner in this setting. 
+
+        A direct comparison between the models used so far, a standard autoencoder without 
+        feedback and a feedback autoencoder with \(\eta = 20 \), \(\beta_{max}=\frac{2}{3}\) is 
+        depicted below: 
+        <center>
+            <img src="img/exp5/before1t.png"> 
+            <img src="img/exp5/before2t.png">
+        </center>
+
+        <br> <br> 
+        <hr>
+        Extrapolating from the result recorded here, we might suspect that increasing 
+        \(\beta_{max}\) and decreasing \(\eta\) further could lead to further improvements in performance. 
+        A second grid search with \(\eta = [1, 2, 3, 4, 5], \beta_{max} = [0.8, 0.85, 0.9, 0.95]\) is performed to investigate this:
+        <center>
+            <img src="img/exp5/eta1.png">
+            <img src="img/exp5/eta2.png">
+            <img src="img/exp5/eta3.png">
+            <img src="img/exp5/eta4.png">
+            <img src="img/exp5/eta5_2.png"> 
+        </center>
+
+        Indeed, further increasing \(\beta_{max}\) improves performance. However, the same cannot 
+        be said for \(\eta\): 
+        <center>
+            <img src="img/exp5/betamax0.8_2.png">
+        </center>
+    </div>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

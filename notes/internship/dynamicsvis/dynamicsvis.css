@@ -1,0 +1,26 @@
+#wrapper1 {
+    width:500px;
+    /* height: 500px; */
+    clear:both;
+    float:left;
+  }
+
+  #wrapper2 {
+    width:500px;
+    /* height: 500px; */
+    /* clear:both; */
+    /* float:left */
+  }
+
+  #metawrapper {
+    width:1000px;
+    /* height: 500px; */
+    /* clear:both; */
+  }
+.layer {
+    /* background-color: red; */
+    width:90px;
+    /* height:500px; */
+    float:left;
+  }
+  

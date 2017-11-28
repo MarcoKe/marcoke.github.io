@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">CIFAR-10 Classification</h1>
+        Classification on the CIFAR-10 dataset is performed using the following 
+        convolutional architecture: <br> 
+
+        <center> 
+            <img src="img/cifar/exp1/convnet.png">
+        </center>
+
+        The two convolution layers as well as the first fully connected layer are followed 
+        by a rectified linear unit, while the final fully connected layer has a softmax
+        activation. 
+
+        <br><br> 
+        The loss curves without and with feedback (two timesteps) are shown below: 
+       <center>
+           <img src="img/cifar/exp1/trainingloss.png">
+           <img src="img/cifar/exp1/testloss.png">
+       </center>
+       As can be seen, the plots show significant overfitting, although the model
+       with feedback seems to exhibit slightly less overfitting.  
+
+       <br><br> 
+       In an effort to reduce overfitting, dropout and batch normalization are explored. 
+       Dropout is applied to the first fully connected layer (in both passes) and batch normalization 
+       is applied after both of the two convolutional layers, i.e. 
+
+       <br><br> 
+       <center>INPUT --> CONV --> RELU --> BATCHNORM --> MAXPOOL --> ... --> FC 
+    --> RELU --> DROPOUT --> FC --> SOFTMAX</center>
+
+
+       <br><br> 
+        The results for different combinations of feedback, dropout, and batch normalization are given below: 
+       <center>
+        <img src="img/cifar/exp1/trainingloss_reg.png">
+        <img src="img/cifar/exp1/testloss_reg.png">
+       </center>
+
+       <br><br>
+
+       <center>
+        <img src="img/cifar/exp1/trainingacc_reg.png">
+        <img src="img/cifar/exp1/testacc_reg.png">
+       </center>
+
+       Note that while three of the explored combinations do not exhibit significant overfitting, 
+       the two best performing ones in terms of test accuracy do overfit. This could simply 
+       be mitigated with early stopping, as there do not seem to be any significant improvments 
+       after 2000 iterations. 
+
+       <br><br>
+
+    </div>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

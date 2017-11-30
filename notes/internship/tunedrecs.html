@@ -73,7 +73,32 @@
 
         </center>
 
+        <hr>
+
+        Clearly, the tuned parameters cause the feedback to have a higher impact. 
+        While the model with the old parameters was still able to form a reasonable 
+        reconstruction when the first pass reconstruction was used as input to the 
+        second pass, the same cannot be said for the model with tuned parameters: 
+
+        <center>
+            <img src="img/tunedRecs/oldparams_recasinput.png"> 
+            <br> <em>(old parrameters)</em>
+            <br>
+            <img src="img/tunedRecs/newparams_recasinput.png">
+            <br>
+            <em>(tuned parameters)</em>
+        </center>
+        <br><br> 
+        <hr>
+        To further investigate the reliance on feedback, Gaussian noise with 0 mean and varying standard
+        deviations \(X \sim \mathcal{N}(0,\,\sigma^{2})\,\) is added to the feedback signal: 
+        $$f(\mu_S, \mu_D) = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D+X), \beta_{max})}$$
+        
+        
     </div>
+    <center> 
+        <img src="img/tunedRecs/noise.png">
+    </center>
     <script>
         renderMathInElement(document.body);
     </script>

@@ -90,6 +90,15 @@
         </center>
         <br><br> 
         <hr>
+        The following shows the frequency of different feedback magnitudes in the network over the
+        whole test set. The values shown are \(\mu_D\), i.e. the incoming feedback before
+        it has been processed in any way. 
+        <center><img src="img/oldparamsfbhist.png">
+            <img src="img/newparamsfbhist.png">
+                <br><em>(left: old parameters, right: new parameters)</em>
+        </center>
+
+        <br><br> 
         To further investigate the reliance on feedback, Gaussian noise with 0 mean and varying standard
         deviations \(X \sim \mathcal{N}(0,\,\sigma^{2})\,\) is added to the feedback signal: 
         $$f(\mu_S, \mu_D) = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D+X), \beta_{max})}$$

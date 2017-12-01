@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Full Feedback</h1>
+       
+        In the previous experimental setups, feedback was only send from
+        one decoder layer to one encoder layer. Naturally, we can add more feedback
+        connections to the network. <br> 
+
+        In this experiment, every (hidden) layer receives feedback from all the layers 
+        that are above it. 
+       <br> 
+       <center> 
+           
+           <img src="img/AutoEnc.png" height="200">
+           
+           
+           
+           <img src="img/fullfb/AutoEncfull.png" height="200">           
+           <br>
+           <em>(left: old feedback connections, right: full feedback)</em>
+           
+           
+
+        </center>
+
+        <hr>
+
+        
+        <center>
+            <img src="img/fullfb/fullfeedback_training.png"> 
+           
+            
+            <img src="img/fullfb/fullfeedback_test.png">
+            
+        </center>
+        
+    </div>
+    
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

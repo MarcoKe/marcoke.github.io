@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Are we just learning a constant gain? </h1>
+       
+        Visualising the distributions of feedback and gain for the MNIST autoencoder with partial feedback, we might suspect that we are simply learning a constant gain: 
+
+        <center> 
+            <img src="img/constantgain/fbdistr_mnist_partialautoenc.png"> 
+            <img src="img/constantgain/gaindistr_mnist_partialautoenc.png">
+            <br> (beta_max: 0.9, eta: 5)
+        </center>
+
+        (where \(\mu_D\) is the feedback and \(\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}\) is the gain)
+        
+        <br><br>
+
+        Since most of the gain values are around 10, it is questionable whether the learned feedback would differ much from simply setting the gain of every 
+        ReLu to 10. The following figure shows the results of using a constant gain: 
+
+        <br> 
+        <center> 
+            <img src="img/constantgain/partial_test_loss.png">
+        </center>
+       <br> 
+        The constant gain clearly underperforms compared to the actual feedback mechanism, but, in the first half of training, it can indeed achieve faster convergence
+        than the standard autoencoder. In later stages, however, it is not able to match the performance of the standard autoencoder. This might be because it is a very 
+        crude approximation of the learned feedback which may help in the beginning of training, but not towards the end, as more nuanced feedback is required. 
+
+        <br><br> 
+        The experiment is repeated with full feedback (and full constant gain, respectively). Again, a constant gain of 10 is used: 
+
+        <br> 
+        <center>
+            <img src="img/constantgain/full_test_loss.png">
+        </center>
+
+        This time, the constant gain network even manages to outperform the feedback network in the beginnings of training. In later stages, it cannot outperform the feedback 
+        network anymore but is on par with the standard autoencoder. 
+
+        <br><br> 
+
+        Of course, we have not looked at the learned feedback distributions for the network with full feedback, so a constant gain of 10 may be a flawed assumption. 
+
+        The distributions for each layer that receives feedback are visualised as histograms below: <br> 
+
+        <center> 
+            <img src="img/constantgain/learnedfeedbackhist.png">
+        </center>
+
+       
+        
+    </div>
+    
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

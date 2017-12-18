@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h3 id="genterm">Adding noise to the activations</h1>
+        Gaussian noise with 0 mean and a standard deviation of 1 is added to the activations of E1, E2, and D1 in only the first pass (figure 1), only the second
+        pass (figure 2), and in both passes (figure 3): 
+            <br> 
+       <center> 
+           <img src="img/noiseacts/firstpass1.0.png">
+           <br> 
+           <hr>
+           <img src="img/noiseacts/secondpass1.0.png">
+           <br> 
+           <hr>
+           
+           <img src="img/noiseacts/both1.0.png">
+       </center>
+       <hr>
+       
+
+       The same is repeated with a standard deviation of 5: 
+       <center> 
+        <img src="img/noiseacts/firstpass5.0.png">
+        <br> 
+        <hr>
+        
+        <img src="img/noiseacts/secondpass5.0.png">
+        <br> 
+        <hr>
+        
+        <img src="img/noiseacts/both5.0.png">
+    </center>
+
+
+    </div>
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

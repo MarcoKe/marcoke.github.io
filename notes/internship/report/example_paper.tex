@@ -1,0 +1,318 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2017 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2017,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% use Times
+\usepackage{times}
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2017} with
+% \usepackage[nohyperref]{icml2017} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+%\usepackage{icml2017} 
+
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Proceedings of the...''
+\usepackage[accepted]{icml2017}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Feedback-Gated Rectified Linear Units}
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{Feedback-Gated Rectified Linear Units}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2017
+% package.
+
+% list of affiliations. the first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% you can specify symbols, otherwise they are numbered in order
+% ideally, you should not use this facility. affiliations will be numbered
+% in order of appearance and this is the preferred way.
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Marco Kemmerling}{ma}
+
+\end{icmlauthorlist}
+
+\icmlaffiliation{ma}{University of Maastricht, Maastricht, The Netherlands}
+%\icmlaffiliation{goo}{Googol ShallowMind, New London, Michigan, USA}
+%\icmlaffiliation{ed}{University of Edenborrow, Edenborrow, United Kingdom}
+
+\icmlcorrespondingauthor{Marco Kemmerling}{m.kemmerling@student.maastrichtuniversity.nl}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{boring formatting information, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\begin{abstract} 
+Feedback connections play a prominent role in the human brain but have not received much attention in artificial neural network research. We propose a biologically inspired feedback mechanism which gates rectified linear units...\end{abstract} 
+
+\section{Introduction}
+\label{introduction}
+The brain has served as inspiration for practical models called artificial neural networks (ANNs) for decades. While these models are usually heavily simplified compared to the brain, they have seen massive success in areas such as computer vision, speech recognition, (...), in recent times. 
+
+Despite successes, it is clear that the average human brain is vastly more powerful than any model used in practice today, and as such it may be useful to investigate how and where exactly the brain and ANNs differ. 
+
+While there is clear evidence of prominent feedback connections in the brain, ANNs have overwhelmingly been designed based on solely the feed forward paradigm. Thus, it is of interested if and how the incorporation of feedback may help artificial models. Further, ANNs with feedback are naturally easier to investigate and manipulate than the real brain and could potentially offer insights into exactly what role this mechanism plays in the brain. 
+
+(maybe tell that ornithology story)
+
+In the remainder of this paper, some neuroscientific background is explored, a specific model of a feedback mechanism is examined and in the following section simplified to be incorporated into artificial models. Then experiments results discussion... 
+
+
+\section{Neuroscientific Background} 
+ 
+\subsection{Neocortex}
+The neocortex, part of the cerebral cortex, is a part of the brain that evolved in mammals comparatively recently. It comprises around 80\% of the human brain \cite{markram2004} and is therefore often speculated to be responsible for the emergence of higher intelligence. 
+
+The most abundant type of neuron in the neocortex are pyramidal neurons, constituting between 70-85\% of cells. In contrast to the remaining neurons in the neocortex, so called interneurons, which are mostly inhibitory, pyramidal neurons are excitatory \cite{defelipe1992}. 
+
+As the name suggests, pyramidal neurons have a cell body roughly shaped like a pyramid, with a base at the bottom and an apex at the top. Pyramidal neurons have two types of dendrites: basal dendrites, originating at the base, and one apical dendrite, originating at the apex. This apical dendrite terminates in what is called the apical tuft, where it branches off into ...\cite{defelipe1992}. 
+
+These apical and basal dendrites are not just differently located, but also serve different functions. Basal dendrites receive regular feedforward input, while the apical tuft dendrites receive feedback input. 
+
+The neocortex appears to have a distinct structure which is characterised by its organisation into layers as well as columns. The columnar organisation is based on the observation that neurons stacked on top of each other tend to be connected and have similar response properties, while only few connections exist between columns. Columns are hence hypothesised to be a basic functional unit in the cortex, although this is somewhat debated in the neuroscience community \cite{goodhill2002}.
+
+The further organisation into six layers was proposed by Brodman in 1909 [citation]. Layers 1 and 6 are of particular interest here. Layer 1 consists of almost no cell bodies, but mostly connections between axons and the apical dendrites of pyramidal neurons \cite{shipp2007}, i.e. is serves as a connection hub for feedback signals. Layer 6 sends signals to neurons in the thalamus which then in turn sends signals to layer 1 neurons in the same column \cite{shipp2007}, i.e. layers 1 and 6 create a loop where feedback is sent from layer 6 and received by layer 1.  
+\subsection{Distal Input to Pyramidal Neurons}
+
+
+\begin{equation} 
+	\label{eq:neurogain}
+	f = g(\mu_S + \alpha \mu_D + \sigma + f\beta(\mu_D)-\theta)
+\end{equation}
+
+where $f$ is the firing rate of the neuron, $g$ the gain, $\mu_S$ the average somatic current (i.e. feedforward input), $\mu_D$ the average distal current (i.e. feedback input), $\alpha$ is an attenuation factor, $\sigma$ represents fluctuations in the current, $\theta$ is the firing threshold, and $\beta(\mu_D)$ is an increasing function of the dendritic mean current which saturates for values above some current threshold.  
+
+\section{Feedback Gated Rectified Linear Units} 
+The model described in the previous section serves as a basis to derive an activation function which can replace the common rectified linear unit (ReLu) \cite{nair2010rectified}, i.e. $f(x) = max(0, x)$.  
+
+To arrive at a more practical activation function, $g$ and $\theta$ are dropped from equation \ref{eq:neurogain}, since the threshold is modelled through the bias unit and the gain (i.e. slope) of a ReLu is by definition $1$ and can thus be safely dropped. Dropping the summands $\alpha \mu_D$ and $\sigma$ is less justifiable, but since they do not contribute to the core property of gain increase, they will be disregarded here, arriving at the following simplified relationship: 
+
+\begin{equation}
+	f = \mu_S + f\beta(\mu_D)
+\end{equation}
+
+Removing $f$ from the right hand side: 
+\begin{equation} 
+\label{eq:rate1}
+	f = \frac{1}{1 - \beta(\mu_D)} \mu_S
+\end{equation}
+
+What remains is an exact definition of $\beta(\mu_D)$, which, according to \cite{larkum2004}, is ``an increasing function of the dendritic mean current $\mu$ which saturates for values above 1000pA``. In other words, the function is bounded, i.e. the gain cannot be increased to arbitrarily high values. Accordingly, some maximum value $\beta_{max}$ the function can produce and a threshold value $\eta$ which describes when this maximum is reached need to be defined. 
+Assuming a piecewise linear model, $\beta(\mu_D)$ is thus defined as follows: 
+\begin{equation}
+\label{eq:betafunc}
+	\beta(\mu_D) = min \bigg(\frac{\beta_{max}}{\eta} \mu_D, \beta_{max}\bigg)
+\end{equation} 
+
+As there are no obvious values to assign to $\beta_{max}$ and $\eta$, they are treated as hyperparameters. Since setting $\beta_{max}$ to 1 results in a division by $0$ and a value of $\beta_{max} > 1$ causes a negative slope, $\beta_{max}$ should be smaller than $1$. 
+
+Plugging equation \ref{eq:betafunc} into equation \ref{eq:rate1} yields: 
+\begin{equation}
+	f = \frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} \ \mu_S 
+\end{equation}
+
+Since negative values for $\mu_S$ are not taken account, it is replaced with $max(0, \mu_S)$, i.e. the classic ReLu function: 
+\begin{equation}
+		f = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} 
+\end{equation}
+
+\subsection{Feedback Gated ReLus in Practice}
+The feedback path attempts to mimic the top-down path in the brain. As such, the origin of feedback terminating in a layer should be a layer that is higher in the (feedforward) hierarchy. 
+
+Since feedback from higher layers can only be computed if these higher layers have received feedforward input, multiple time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
+
+\section{MNIST}
+The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
+
+The models used in the following experiments are based on a (non-convolutional) autoencoder with two encoding and two decoding layers. The input layer has dimension $(1\times784)$, the first encoding layer (E1) outputs data of dimension $(1\times392)$, the second (E2) of dimension $(1\times196)$, the first decoding layer (D1) of dimension $(1\times392)$ and the second decoding layer (D2) restores the data back to its original dimension. Except for the final layer, each layer is followed by a ReLu activation. The final layer makes use of a sigmoid activation function. 
+
+First experiments were performed with only a single feedback connection between the first decoder and the first encoder (see figure \ref{fig:autoenc}). 
+
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/AutoEnc.png}
+      \caption{Autoencoder with (partial) feedback.}
+      \label{fig:autoenc}
+  \end{figure}
+  
+Optimal values for $\eta$ and $\beta_{max}$ were determined by a grid search ($\beta_{max}=0.95, \eta=5$).
+ \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fb_vs_nofb.png}
+      \caption{Placeholder, make sure to update this figure}
+      \label{fig:fbvsnofb}
+  \end{figure}
+  
+To increase the difficulty of the task, the dimension of the second encoding layer is reduced to 10 and the experiment is repeated (this modification will persist in all subsequent experiments).
+
+(results) 
+
+\subsection{More Than Two Timesteps}
+While at least two timesteps are required to incorporate feedback, it is not clear whether exactly two timesteps should be used or whether $>2$ timesteps can be beneficial. To examine this, autoencoders with 1, 2, 4, 6, and 8 timesteps are trained. 
+
+The results, depicted in figure \ref{fig:timesteps}, show that more than two timesteps yield no or negligible improvement. 
+
+
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/timesteps_test.png}
+      \caption{Performance with varying numbers of timesteps. Each configuration was trained and evaluated 10 times. The curves shown are the averaged losses on the test set.}
+      \label{fig:timesteps}
+  \end{figure}
+ 
+ 
+\subsection{Comprehensive Feedback}
+In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more opportunities to incorporate feedback. Specifically, in the following, each layer receives feedback from every layer above it.
+
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fullfb.png}
+      \caption{Placeholder, make sure to update this figure}
+      \label{fig:fullfeedback}
+  \end{figure}
+  
+  As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better performance than the model with only partial feedback. 
+    
+ \subsection{Are We Just Learning A Constant Gain (working title)} 
+ In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
+ 
+ The following figure shows the data as collected in the network with a single feedback connection. 
+ 
+ \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartial.png}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartialgain.png}
+
+      \caption{Distribution of feedback (top) and gain (bottom) values collected in a network with partial feedback over the complete MNIST test set. }
+      \label{fig:partialhists}
+  \end{figure}
+  
+  While there are some smaller gain values, the overwhelming majority of values are the maximum gain the network can produce. This raises the question whether there is much benefit to learning feedback or whether it might be similarly beneficial to simply multiply all activation values by a constant. 
+  
+  This is easily tested by setting the gain of every ReLu in the affected layer to a constant value of 10. 
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartial_loss.png}
+      \caption{Placeholder, make sure to update this figure}
+      \label{fig:contgainpartialloss}
+  \end{figure}
+  
+  As can be seen in figure \ref{fig:contgainpartialloss}, this does lead to a steeper loss curve than the standard autoencoder, although not quite as steep as that of the autoencoder with actual learned feedback. Further, the performance after training is completed is worse than that of the standard autoencoder. 
+  
+  Repeating this same experiment for more than one feedback connection yields the following results: 
+  
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainfull_loss.png}
+      \caption{Placeholder, make sure to update this figure}
+      \label{fig:contgainpartialloss}
+  \end{figure}
+  
+  In this setup, the simple multiplication by a constant initially converges even faster than the autoencoder with learned feedback. While it does not achieve the same performance as the feedback autoencoder in later stages of training, it is on par with the standard autoencoder's performance. 
+  
+  Clearly, the effects of feedback cannot be fully explained by this constant gain, but the idea of a constant gain seems to have some merit. 
+
+
+\subsection{Noisy Activations} 
+While noisy signals are usually not an issue in artificial networks, noise in the brain is very prevalent \cite{Faisal2008}. To see whether feedback makes the model more robust to noise, gaussian noise with zero mean and various standard deviations is added to the (pre-)activations of both the network with feedback and the one without it. The networks are only evaluated with added noise, training is performed without noise. Note that in the network with feedback, noise is added to the activations in both passes.    
+
+		
+	\begin{equation}
+		h = f(W^T x + b + \mathcal{N}(0,\,\sigma^{2})\,)
+	\end{equation}
+	
+	
+	As figure \ref{fig:noiseact} shows, the use of feedback significantly increases the network's robustness to noise. 
+
+	\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.45\textwidth,height=5cm,keepaspectratio]{img/actnoise_recs/input.png}
+      \includegraphics[width=0.45\textwidth,height=5cm,keepaspectratio]{img/actnoise_recs/standardrec.png}
+      \includegraphics[width=0.45\textwidth,height=5cm,keepaspectratio]{img/actnoise_recs/feedbackrec.png}
+      \caption{Gaussian noise with zero mean and standard deviation $\sigma=2.0$ is added to networks with and without feedback. The top row shows input instances to the network, the middle and bottom row show reconstructions of the network without and with feedback (respectively).}
+      \label{fig:noiseact}
+  \end{figure}
+  
+  \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/actnoise_varstd.png}
+      \caption{Gaussian noise with zero mean and varying standard deviations (horizontal) is added to networks with and without feedback. The quality of the reconstruction, as measured by the loss function (vertical axis), with respect to the magnitude of the standard deviation is shown for both networks. }
+      \label{fig:noiseact}
+  \end{figure}
+
+  
+\section{CIFAR-10}
+The CIFAR-10 dataset is composed of 32x23 pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
+  
+\section{Conclusion}
+
+\bibliography{example_paper}
+\bibliographystyle{icml2017}
+
+\end{document} 
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified  
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  

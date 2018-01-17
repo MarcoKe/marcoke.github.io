@@ -119,7 +119,7 @@ The neocortex, part of the cerebral cortex, is a part of the brain that evolved 
 
 The most abundant type of neuron in the neocortex are pyramidal neurons, constituting between 70-85\% of cells. In contrast to the remaining neurons in the neocortex, so called interneurons, which are mostly inhibitory, pyramidal neurons are excitatory \cite{defelipe1992}. 
 
-As the name suggests, pyramidal neurons have a cell body roughly shaped like a pyramid, with a base at the bottom and an apex at the top. Pyramidal neurons have two types of dendrites: basal dendrites, originating at the base, and one apical dendrite, originating at the apex. This apical dendrite terminates in what is called the apical tuft, where it branches off into ...\cite{defelipe1992}. 
+As the name suggests, pyramidal neurons have a cell body roughly shaped like a pyramid, with a base at the bottom and an apex at the top. Pyramidal neurons have two types of dendrites: basal dendrites, originating at the base, and one apical dendrite, originating at the apex. This apical dendrite terminates in what is called the apical tuft, where heavy branching of apical dendrite occurs. \cite{defelipe1992}. 
 
 These apical and basal dendrites are not just differently located, but also serve different functions. Basal dendrites receive regular feedforward input, while the apical tuft dendrites receive feedback input. 
 
@@ -127,7 +127,9 @@ The neocortex appears to have a distinct structure which is characterised by its
 
 The further organisation into six layers was proposed by Brodman in 1909 [citation]. Layers 1 and 6 are of particular interest here. Layer 1 consists of almost no cell bodies, but mostly connections between axons and the apical dendrites of pyramidal neurons \cite{shipp2007}, i.e. is serves as a connection hub for feedback signals. Layer 6 sends signals to neurons in the thalamus which then in turn sends signals to layer 1 neurons in the same column \cite{shipp2007}, i.e. layers 1 and 6 create a loop where feedback is sent from layer 6 and received by layer 1.  
 \subsection{Distal Input to Pyramidal Neurons}
+As described above, apical tuft dendrites receive feedback input which appears to modulate the gain of the corresponding neuron \cite{larkum2004}. It is hypothesised that this is a way for the cortex to combine an internal representation of the world with external input, i.e. feedback to a neuron may predict whether this particular should be firing and even small feedforward input may lead the neuron to fire as long as the feedback signal is strong \cite{larkum2013cellular}. 
 
+Taking both feedforward and feedback input into account, the firing rate of a neuron can be modelled as follows \cite{larkum2004}:
 
 \begin{equation} 
 	\label{eq:neurogain}
@@ -136,7 +138,7 @@ The further organisation into six layers was proposed by Brodman in 1909 [citati
 
 where $f$ is the firing rate of the neuron, $g$ the gain, $\mu_S$ the average somatic current (i.e. feedforward input), $\mu_D$ the average distal current (i.e. feedback input), $\alpha$ is an attenuation factor, $\sigma$ represents fluctuations in the current, $\theta$ is the firing threshold, and $\beta(\mu_D)$ is an increasing function of the dendritic mean current which saturates for values above some current threshold.  
 
-\section{Feedback Gated Rectified Linear Units} 
+\section{Feedback-Gated Rectified Linear Units} 
 The model described in the previous section serves as a basis to derive an activation function which can replace the common rectified linear unit (ReLu) \cite{nair2010rectified}, i.e. $f(x) = max(0, x)$.  
 
 To arrive at a more practical activation function, $g$ and $\theta$ are dropped from equation \ref{eq:neurogain}, since the threshold is modelled through the bias unit and the gain (i.e. slope) of a ReLu is by definition $1$ and can thus be safely dropped. Dropping the summands $\alpha \mu_D$ and $\sigma$ is less justifiable, but since they do not contribute to the core property of gain increase, they will be disregarded here, arriving at the following simplified relationship: 
@@ -170,7 +172,7 @@ Since negative values for $\mu_S$ are not taken account, it is replaced with $ma
 		f = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} 
 \end{equation}
 
-\subsection{Feedback Gated ReLus in Practice}
+\subsection{Feedback-Gated ReLus in Practice}
 The feedback path attempts to mimic the top-down path in the brain. As such, the origin of feedback terminating in a layer should be a layer that is higher in the (feedforward) hierarchy. 
 
 Since feedback from higher layers can only be computed if these higher layers have received feedforward input, multiple time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
@@ -302,6 +304,10 @@ The CIFAR-10 dataset is composed of 32x23 pixel colour images of various objects
 
 \bibliography{example_paper}
 \bibliographystyle{icml2017}
+
+\newpage
+
+\section{Appendix}
 
 \end{document} 
 

@@ -177,15 +177,21 @@ The feedback path attempts to mimic the top-down path in the brain. As such, the
 
 Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
 	Although more than two timesteps are not necessary, it is possible to use an arbitrary number of timesteps, which is examined in section \ref{timesteps}.
-
+	
+	TALK ABOUT FEEDBACK WEIGHTS 
+	
+Dropout \cite{srivastava2014dropout} should be used by dropping out the same units in all passes.  
+If e.g. dropout is only applied on the last pass, the remaining units will still receive signals from dropped out units in previous passes.
 \section{MNIST}
+GIVE SOME INTRODUCTION TO EXPERIMENT SECTION HERE (SHOULD TIE BACK INTO THE RESEARCH QUESTIONS POSED IN THE INTRODUCTION)
+
 The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
 
 The models used in the following experiments are based on a (non-convolutional) autoencoder with two encoding and two decoding layers. The input layer has dimension $(1\times784)$, the first encoding layer (E1) outputs data of dimension $(1\times392)$, the second (E2) of dimension $(1\times196)$, the first decoding layer (D1) of dimension $(1\times392)$ and the second decoding layer (D2) restores the data back to its original dimension. Except for the final layer, each layer is followed by a ReLu activation. The final layer makes use of a sigmoid activation function. 
 
 First experiments were performed with only a single feedback connection between the first decoder and the first encoder (see figure \ref{fig:autoenc}). 
 
-\begin{figure}[H]
+\begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/AutoEnc.png}
       \caption{Autoencoder with (partial) feedback.}
@@ -193,7 +199,7 @@ First experiments were performed with only a single feedback connection between 
   \end{figure}
   
 Optimal values for $\eta$ and $\beta_{max}$ were determined by a grid search ($\beta_{max}=0.95, \eta=5$).
- \begin{figure}[H]
+ \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fb_vs_nofb.png}
       \caption{Placeholder, make sure to update this figure}

@@ -175,7 +175,8 @@ Since negative values for $\mu_S$ are not taken account, it is replaced with $ma
 \subsection{Feedback-Gated ReLus in Practice}
 The feedback path attempts to mimic the top-down path in the brain. As such, the origin of feedback terminating in a layer should be a layer that is higher in the (feedforward) hierarchy. 
 
-Since feedback from higher layers can only be computed if these higher layers have received feedforward input, multiple time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
+Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
+	Although more than two timesteps are not necessary, it is possible to use an arbitrary number of timesteps, which is examined in section \ref{timesteps}.
 
 \section{MNIST}
 The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
@@ -204,6 +205,7 @@ To increase the difficulty of the task, the dimension of the second encoding lay
 (results) 
 
 \subsection{More Than Two Timesteps}
+\label{timesteps}
 While at least two timesteps are required to incorporate feedback, it is not clear whether exactly two timesteps should be used or whether $>2$ timesteps can be beneficial. To examine this, autoencoders with 1, 2, 4, 6, and 8 timesteps are trained. 
 
 The results, depicted in figure \ref{fig:timesteps}, show that more than two timesteps yield no or negligible improvement. 

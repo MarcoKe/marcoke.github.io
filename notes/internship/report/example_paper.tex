@@ -169,6 +169,7 @@ Plugging equation \ref{eq:betafunc} into equation \ref{eq:rate1} yields:
 
 Since negative values for $\mu_S$ are not taken account, it is replaced with $max(0, \mu_S)$, i.e. the classic ReLu function: 
 \begin{equation}
+\label{eq:fgrelu}
 		f = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} 
 \end{equation}
 
@@ -182,7 +183,12 @@ Since feedback from higher layers can only be computed if these higher layers ha
 	
 Dropout \cite{srivastava2014dropout} should be used by dropping out the same units in all passes.  
 If e.g. dropout is only applied on the last pass, the remaining units will still receive signals from dropped out units in previous passes.
+
+In convolutional neural networks, feedback is implemented on a filter-wise basis, i.e. each neuron does not receive its own unique feedback signal, but rather every filter receives a unique feedback signal that is shared between all units belonging to that filter. 
+
+
 \section{MNIST}
+\label{mnist}
 GIVE SOME INTRODUCTION TO EXPERIMENT SECTION HERE (SHOULD TIE BACK INTO THE RESEARCH QUESTIONS POSED IN THE INTRODUCTION)
 
 The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
@@ -286,7 +292,7 @@ While noisy signals are usually not an issue in artificial networks, noise in th
 	\end{equation}
 	
 	
-	As figure \ref{fig:noiseact} shows, the use of feedback significantly increases the network's robustness to noise. 
+	As figure \ref{fig:noiseact} shows, the use of feedback significantly increases the network's robustness to noise. While this is not especially useful for machine learning models, it may be part of the reason why the feedback path exists in the brain. 
 
 	\begin{figure}[H]
       \centering
@@ -306,7 +312,31 @@ While noisy signals are usually not an issue in artificial networks, noise in th
 
   
 \section{CIFAR-10}
-The CIFAR-10 dataset is composed of 32x23 pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
+The CIFAR-10 dataset is composed of $32\times32$ pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
+
+\subsection{Autoencoder}
+
+While the autoencoder with feedback clearly performs better than the one without it, the difference between the two is not as pronounced as it is in the MNIST experiments. 
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_auto_test_loss.png}
+      \caption{Test set loss of autoencoders with and without feedback on the CIFAR-10 dataset.}
+      \label{fig:cifarauto}
+  \end{figure}
+
+
+\subsection{Classification} 
+Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax layer. 
+Batch normalisation is applied after the pooling layers and dropout with a rate of $0.5$ is applied after the pooling and the fully connected layers. 
+
+To test whether feedback can improve classification performance, the network is trained with and without feedback. Figure \ref{fig:cifarclass} shows only a marginal performance difference between the two networks, with the feedback network being slightly better. 
+
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_class_test_loss.png}
+      \caption{Classification loss on the CIFAR-10 test set. The training time of 200000 batches corresponds to 512 epochs.}
+      \label{fig:cifarclass}
+  \end{figure}
   
 \section{Conclusion}
 
@@ -315,7 +345,71 @@ The CIFAR-10 dataset is composed of 32x23 pixel colour images of various objects
 
 \newpage
 
+
 \section{Appendix}
+
+\subsection{Hyperparameter Tuning} 
+As mention in section \ref{mnist}, optimal values for $\beta_{max}$ and $\eta$ are determined by a grid search. The initial grid is defined by $\eta = [5, 10, 15, \dots, 50]$ and $\beta_{max} = [0.1, 0.2, \dots, 0.8]$. 
+
+The highest value for $\beta_{max} \ (0.8)$ consistently shows the best performance regardless of $\eta$'s values, as exemplified by figure \ref{fig:hyper1}. Note that a high constant value of $\eta$ with varying values for $\beta_{max}$ will generally lead to less spread between the loss curves, since the activation function will be more sensitive to $\beta_{max}$ when $\eta$ is low. 
+
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/hyper/eta5.png}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/hyper/eta50.png}
+      \caption{Top: first pass, bottom: second pass}
+      \label{fig:hyper1}
+  \end{figure}
+
+While higher values of $\beta_{max}$ lead to better performance, the inverse relationship can be seen with $\eta$, i.e. lower values of $\eta$ lead to better performance. This is illustrated in figure \ref{fig:hyper2}.  
+
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/hyper/betamax08.png}
+      
+      \caption{Top: first pass, bottom: second pass}
+      \label{fig:hyper2}
+ \end{figure}
+ 
+A second grid search with $\eta = [1, 2, 3, 4, 5], \beta_{max} = [0.8, 0.85, 0.9, 0.95]$ is performed to determine whether even lower/higher values can further improve performance. Indeed, increasing $\beta_{max}$ to $0.95$ leads to better performance, but further decreasing $\eta$ is not advantegeous. 
+
+
+\subsection{Feedback-Controlled Threshold} 
+Equation \ref{eq:neurogain} describes not only gain modulation through feedback, but also an adjustment of the activation functions threshold, i.e. $\alpha \mu_D$ is one of the terms in the summation. While gain modulation is the main property of interest in this paper, it is conceivable that the change in threshold plays a significant part in this mechanism as well. 
+
+Incorporating this threshold mechanism into equation \ref{eq:fgrelu} leads to: 
+\begin{equation}
+	f = \frac{max(0, \mu_S + \alpha \mu_D)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} 
+\end{equation}
+
+where $\alpha$ is a parameter to be learned by the network. While $\alpha$ could also be set to a constant (tuned) value, prior experiments suggest that it is beneficial to let the network adjust $alpha$ during the course of training. 
+
+As can be seen in figure \ref{fig:threshold}, the added threshold mechanism is not able to improve upon the network implementing the gain mechanism. Although the models with feedback-controlled threshold both perform better than the standard autoencoder, the model with only gain and no threshold mechanism still has the overall best performance. 
+
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/threshold/threshold_test.png}
+            \caption{Performance of the standard autoencoder, an autoencoder with feedback-controlled threshold, an autoencoder with feedback-controlled gain, and an autoencoder with both feedback-controlled threshold and gain on the MNIST test set.}
+      \label{fig:threshold}
+  \end{figure}
+
+\subsection{T-SNE} 
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/firstpass.png}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/secondpass.png}
+      \caption{Top: first pass, bottom: second pass}
+      \label{fig:noiseact}
+  \end{figure}
+  
+ \subsection{Input With Reduced Contrast}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/contrast/diff.png}
+            \caption{Absolute difference in mean pixel value between the two reconstructions as a function of different contrast factors (from 0.1 to 1)}
+      \label{fig:noiseact}
+  \end{figure}
+
 
 \end{document} 
 

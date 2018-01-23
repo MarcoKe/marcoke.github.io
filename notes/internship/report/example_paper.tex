@@ -315,14 +315,26 @@ While noisy signals are usually not an issue in artificial networks, noise in th
 The CIFAR-10 dataset is composed of $32\times32$ pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
 
 \subsection{Autoencoder}
+Similarly to the MNIST experiments, an autoencoder is trained on the CIFAR-10 dataset. Again, the architecture consists of two encoding and two decoding layers. Contrary to MNIST, the encoding/decoding layers used here are convolutional/transposed convolutional layers with PLACEHOLDER filters. 
 
-While the autoencoder with feedback clearly performs better than the one without it, the difference between the two is not as pronounced as it is in the MNIST experiments. 
+While the autoencoder with feedback clearly performs better than the one without it, the difference between the two is not as pronounced as it is in the MNIST experiments.   
+
+Curiously, if batch normalisation is used after the activation functions, feedback cannot improve on the performance of the standard autoencoder. 
+
 \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_auto_test_loss.png}
       \caption{Test set loss of autoencoders with and without feedback on the CIFAR-10 dataset.}
       \label{fig:cifarauto}
   \end{figure}
+  
+  \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_auto_batch_test_loss.png}
+      \caption{Test set loss of autoencoders with and without feedback on the CIFAR-10 dataset. Both models make use of batch normalisation. }
+      \label{fig:cifarautobatch}
+  \end{figure}
+
 
 
 \subsection{Classification} 
@@ -339,6 +351,9 @@ To test whether feedback can improve classification performance, the network is 
   \end{figure}
   
 \section{Conclusion}
+tell them what you told them 
+
+suggest future work 
 
 \bibliography{example_paper}
 \bibliographystyle{icml2017}
@@ -419,7 +434,7 @@ As can be seen in figure \ref{fig:threshold}, the added threshold mechanism is n
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/contrast/diff.png}
             \caption{Absolute difference in mean pixel value between the two reconstructions as a function of different contrast factors (from 0.1 to 1)}
       \label{fig:noiseact}
-  \end{figure}
+  \end{figure},,        km, kk,,,,....................,,,,,,,,k
 
 
 \end{document} 

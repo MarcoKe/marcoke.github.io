@@ -234,7 +234,7 @@ The results, depicted in figure \ref{fig:timesteps}, show that more than two tim
 \subsection{Comprehensive Feedback}
 In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more opportunities to incorporate feedback. Specifically, in the following, each layer receives feedback from every layer above it.
 
-  \begin{figure}[H]
+  \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fullfb.png}
       \caption{Placeholder, make sure to update this figure}
@@ -248,7 +248,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
  
  The following figure shows the data as collected in the network with a single feedback connection. 
  
- \begin{figure}[H]
+ \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartial.png}
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartialgain.png}
@@ -260,7 +260,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   While there are some smaller gain values, the overwhelming majority of values are the maximum gain the network can produce. This raises the question whether there is much benefit to learning feedback or whether it might be similarly beneficial to simply multiply all activation values by a constant. 
   
   This is easily tested by setting the gain of every ReLu in the affected layer to a constant value of 10. 
-  \begin{figure}[H]
+  \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartial_loss.png}
       \caption{Placeholder, make sure to update this figure}
@@ -271,7 +271,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   
   Repeating this same experiment for more than one feedback connection yields the following results: 
   
-  \begin{figure}[H]
+  \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainfull_loss.png}
       \caption{Placeholder, make sure to update this figure}

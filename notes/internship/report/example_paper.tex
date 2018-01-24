@@ -248,7 +248,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
  \subsection{Are We Just Learning A Constant Gain (working title)} 
  In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
  
- The following figure shows the data as collected in the network with a single feedback connection. 
+ Figure \ref{fig:partialhists} shows the data as collected in the network with a single feedback connection. 
  
  \begin{figure}
       \centering
@@ -271,13 +271,13 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   
   As can be seen in figure \ref{fig:contgainpartialloss}, this does lead to a steeper loss curve than the standard autoencoder, although not quite as steep as that of the autoencoder with actual learned feedback. Further, the performance after training is completed is worse than that of the standard autoencoder. 
   
-  Repeating this same experiment for more than one feedback connection yields the following results: 
+  Repeating this same experiment for more than one feedback connection yields to results as illustrated in figure \ref{fig:contgainfullloss}. 
   
   \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainfull_loss.png}
       \caption{Placeholder, make sure to update this figure}
-      \label{fig:contgainpartialloss}
+      \label{fig:contgainfullloss}
   \end{figure}
   
   In this setup, the simple multiplication by a constant initially converges even faster than the autoencoder with learned feedback. While it does not achieve the same performance as the feedback autoencoder in later stages of training, it is on par with the standard autoencoder's performance. 
@@ -286,6 +286,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
 
 
 \subsection{Noisy Activations} 
+\label{noisyacts}
 While noisy signals are usually not an issue in artificial networks, noise in the brain is very prevalent \cite{Faisal2008}. To see whether feedback makes the model more robust to noise, gaussian noise with zero mean and various standard deviations is added to the (pre-)activations of both the network with feedback and the one without it. The networks are only evaluated with added noise, training is performed without noise. Note that in the network with feedback, noise is added to the activations in both passes.    
 
 		
@@ -338,7 +339,19 @@ Curiously, if batch normalisation \cite{ioffe2015batch} is used after the activa
       \label{fig:cifarautobatch}
   \end{figure}
 
-ADD NOISE EXPERIMENT FOR CIFAR 
+\subsection{Noisy Activations}
+The experiment from section \ref{noisyacts} is repeated on the CIFAR-10 dataset. The network employed is the autoencoder without batch normalisation from the previous experiment. 
+
+Since feedback increased the robustness to noise in the MNIST autoencoder, the same behaviour would be expected here. However, as apparent in figure \ref{fig:cifarnoise}, the network with feedback is much more sensitive to (even small amounts of) noise than the one without feedback. 
+
+compounding effect   
+
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_actnoise.png}
+      \caption{Gaussian noise with zero mean and varying standard deviations is added to the CIFAR-10 autoencoders with and without feedback. Although this is not apparent due to the scale of the plot, the data for the network without feedback follows a similar shape to the one with feedback.}
+      \label{fig:cifarnoise}
+  \end{figure}
 
 \subsection{Classification} 
 Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling \cite{zhou1988computation} layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax \cite{bridle1990probabilistic} layer. 
@@ -370,6 +383,9 @@ Section \ref{cifarae} suggests that there may be an (unfavourable) interaction b
 
 
 suggest future work: relationship feedback batchnorm 
+
+multi modal 
+
 
 \bibliography{example_paper}
 \bibliographystyle{icml2017}

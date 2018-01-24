@@ -97,7 +97,7 @@
 \printAffiliationsAndNotice{} % otherwise use the standard text.
 
 \begin{abstract} 
-Feedback connections play a prominent role in the human brain but have not received much attention in artificial neural network research. We propose a biologically inspired feedback mechanism which gates rectified linear units...\end{abstract} 
+Feedback connections play a prominent role in the human brain but have not received much attention in artificial neural network research. Here, a biologically inspired feedback mechanism which gates rectified linear units is proposed. On the MNIST dataset, autoencoders with feedback show faster convergence, better performance, and more robustness to noise compared to their counterparts without feedback. Some benefits, although less pronounced and less consistent, can be observed when feedback is applied on the CIFAR-10 dataset.\end{abstract} 
 
 \section{Introduction}
 \label{introduction}
@@ -245,7 +245,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   
   As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better performance than the model with only partial feedback. 
     
- \subsection{Are We Just Learning A Constant Gain (working title)} 
+ \subsection{Feedback vs Constant Gain} 
  In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
  
  Figure \ref{fig:partialhists} shows the data as collected in the network with a single feedback connection. 

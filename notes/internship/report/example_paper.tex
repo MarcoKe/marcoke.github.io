@@ -94,7 +94,7 @@
 % Remove it (just {}) if you do not need this facility.
 
 %\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
-\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+\printAffiliationsAndNotice{} % otherwise use the standard text.
 
 \begin{abstract} 
 Feedback connections play a prominent role in the human brain but have not received much attention in artificial neural network research. We propose a biologically inspired feedback mechanism which gates rectified linear units...\end{abstract} 
@@ -139,9 +139,9 @@ Taking both feedforward and feedback input into account, the firing rate of a ne
 where $f$ is the firing rate of the neuron, $g$ the gain, $\mu_S$ the average somatic current (i.e. feedforward input), $\mu_D$ the average distal current (i.e. feedback input), $\alpha$ is an attenuation factor, $\sigma$ represents fluctuations in the current, $\theta$ is the firing threshold, and $\beta(\mu_D)$ is an increasing function of the dendritic mean current which saturates for values above some current threshold.  
 
 \section{Feedback-Gated Rectified Linear Units} 
-The model described in the previous section serves as a basis to derive an activation function which can replace the common rectified linear unit (ReLu) \cite{nair2010rectified}, i.e. $f(x) = max(0, x)$.  
+The model described in the previous section serves as a basis to derive an activation function which can replace the common rectified linear unit (ReLU) \cite{nair2010rectified}, i.e. $f(x) = max(0, x)$.  
 
-To arrive at a more practical activation function, $g$ and $\theta$ are dropped from equation \ref{eq:neurogain}, since the threshold is modelled through the bias unit and the gain (i.e. slope) of a ReLu is by definition $1$ and can thus be safely dropped. Dropping the summands $\alpha \mu_D$ and $\sigma$ is less justifiable, but since they do not contribute to the core property of gain increase, they will be disregarded here, arriving at the following simplified relationship: 
+To arrive at a more practical activation function, $g$ and $\theta$ are dropped from equation \ref{eq:neurogain}, since the threshold is modelled through the bias unit and the gain (i.e. slope) of a ReLU is by definition $1$ and can thus be safely dropped. Dropping the summands $\alpha \mu_D$ and $\sigma$ is less justifiable, but since they do not contribute to the core property of gain increase, they will be disregarded here, arriving at the following simplified relationship: 
 
 \begin{equation}
 	f = \mu_S + f\beta(\mu_D)
@@ -167,24 +167,24 @@ Plugging equation \ref{eq:betafunc} into equation \ref{eq:rate1} yields:
 	f = \frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} \ \mu_S 
 \end{equation}
 
-Since negative values for $\mu_S$ are not taken account, it is replaced with $max(0, \mu_S)$, i.e. the classic ReLu function: 
+Since negative values for $\mu_S$ are not taken account, it is replaced with $max(0, \mu_S)$, i.e. the classic ReLU function: 
 \begin{equation}
 \label{eq:fgrelu}
 		f = \frac{max(0, \mu_S)}{1 - min(\frac{\beta_{max}}{\eta} \ \mu_D, \beta_{max})} 
 \end{equation}
 
-\subsection{Feedback-Gated ReLus in Practice}
+\subsection{Feedback-Gated ReLUs in Practice}
 The feedback path attempts to mimic the top-down path in the brain. As such, the origin of feedback terminating in a layer should be a layer that is higher in the (feedforward) hierarchy. 
 
-Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLus into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
+Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLUs into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
 	Although more than two timesteps are not necessary, it is possible to use an arbitrary number of timesteps, which is examined in section \ref{timesteps}.
 	
-	TALK ABOUT FEEDBACK WEIGHTS 
+Any layer that receives feedback requires an additional set of weights to compute $\mu_D$. Specifically each layer $h_i$ with size $n$ receiving feedback from layer $h_j$ with size $m$ introduces $n \times m$ additional parameters.  
 	
 Dropout \cite{srivastava2014dropout} should be used by dropping out the same units in all passes.  
 If e.g. dropout is only applied on the last pass, the remaining units will still receive signals from dropped out units in previous passes.
 
-In convolutional neural networks, feedback is implemented on a filter-wise basis, i.e. each neuron does not receive its own unique feedback signal, but rather every filter receives a unique feedback signal that is shared between all units belonging to that filter. 
+In convolutional neural networks \cite{lecun1989generalization}, feedback is implemented on a filter-wise basis, i.e. each neuron does not receive its own unique feedback signal, but rather every filter receives a unique feedback signal that is shared between all units belonging to that filter. 
 
 
 \section{MNIST}
@@ -193,7 +193,7 @@ GIVE SOME INTRODUCTION TO EXPERIMENT SECTION HERE (SHOULD TIE BACK INTO THE RESE
 
 The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
 
-The models used in the following experiments are based on a (non-convolutional) autoencoder with two encoding and two decoding layers. The input layer has dimension $(1\times784)$, the first encoding layer (E1) outputs data of dimension $(1\times392)$, the second (E2) of dimension $(1\times196)$, the first decoding layer (D1) of dimension $(1\times392)$ and the second decoding layer (D2) restores the data back to its original dimension. Except for the final layer, each layer is followed by a ReLu activation. The final layer makes use of a sigmoid activation function. 
+The models used in the following experiments are based on a (non-convolutional) autoencoder with two encoding and two decoding layers. The input layer has dimension $(1\times784)$, the first encoding layer (E1) outputs data of dimension $(1\times392)$, the second (E2) of dimension $(1\times196)$, the first decoding layer (D1) of dimension $(1\times392)$ and the second decoding layer (D2) restores the data back to its original dimension. Except for the final layer, each layer is followed by a ReLU activation. The final layer makes use of a sigmoid activation function. 
 
 First experiments were performed with only a single feedback connection between the first decoder and the first encoder (see figure \ref{fig:autoenc}). 
 
@@ -220,7 +220,9 @@ To increase the difficulty of the task, the dimension of the second encoding lay
 \label{timesteps}
 While at least two timesteps are required to incorporate feedback, it is not clear whether exactly two timesteps should be used or whether $>2$ timesteps can be beneficial. To examine this, autoencoders with 1, 2, 4, 6, and 8 timesteps are trained. 
 
-The results, depicted in figure \ref{fig:timesteps}, show that more than two timesteps yield no or negligible improvement. 
+The results, depicted in figure \ref{fig:timesteps}, show that more than two timesteps yield no or negligible improvement. This may of course be data and/or task dependent. Since MNIST is a fairly simple dataset (binary images, clear separation of background and foreground, etc.), it is not inconceivable that tasks on other datasets may benefit from more than two timesteps. 
+
+
 
 
 \begin{figure}
@@ -259,7 +261,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   
   While there are some smaller gain values, the overwhelming majority of values are the maximum gain the network can produce. This raises the question whether there is much benefit to learning feedback or whether it might be similarly beneficial to simply multiply all activation values by a constant. 
   
-  This is easily tested by setting the gain of every ReLu in the affected layer to a constant value of 10. 
+  This is easily tested by setting the gain of every ReLU in the affected layer to a constant value of 10. 
   \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainpartial_loss.png}
@@ -315,16 +317,17 @@ While noisy signals are usually not an issue in artificial networks, noise in th
 The CIFAR-10 dataset is composed of $32\times32$ pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
 
 \subsection{Autoencoder}
-Similarly to the MNIST experiments, an autoencoder is trained on the CIFAR-10 dataset. Again, the architecture consists of two encoding and two decoding layers. Contrary to MNIST, the encoding/decoding layers used here are convolutional/transposed convolutional layers with PLACEHOLDER filters. 
+\label{cifarae}
+Similarly to the MNIST experiments, an autoencoder is trained on the CIFAR-10 dataset. Again, the architecture consists of two encoding and two decoding layers. Contrary to MNIST, the encoding/decoding layers used here are convolutional/transposed convolutional layers with 16 $5 \times 5$ filters. 
 
 While the autoencoder with feedback clearly performs better than the one without it, the difference between the two is not as pronounced as it is in the MNIST experiments.   
 
-Curiously, if batch normalisation is used after the activation functions, feedback cannot improve on the performance of the standard autoencoder. 
+Curiously, if batch normalisation \cite{ioffe2015batch} is used after the activation functions, feedback cannot improve on the performance of the standard autoencoder. This may suggest that somehow feedback and batch normalisation are interacting in such a way that the feedback is rendered ineffective. 
 
 \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/cifar_auto_test_loss.png}
-      \caption{Test set loss of autoencoders with and without feedback on the CIFAR-10 dataset.}
+      \caption{Test set loss of autoencoders with and without feedback on the CIFAR-10 dataset. Neither model makes use of batch normalisation. }
       \label{fig:cifarauto}
   \end{figure}
   
@@ -335,13 +338,15 @@ Curiously, if batch normalisation is used after the activation functions, feedba
       \label{fig:cifarautobatch}
   \end{figure}
 
-
+ADD NOISE EXPERIMENT FOR CIFAR 
 
 \subsection{Classification} 
-Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax layer. 
+Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling \cite{zhou1988computation} layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax \cite{bridle1990probabilistic} layer. 
 Batch normalisation is applied after the pooling layers and dropout with a rate of $0.5$ is applied after the pooling and the fully connected layers. 
 
 To test whether feedback can improve classification performance, the network is trained with and without feedback. Figure \ref{fig:cifarclass} shows only a marginal performance difference between the two networks, with the feedback network being slightly better. 
+
+Note that the network employed here makes use of batch normalisation, which, as shown in the previous section, may be problematic in combination with feedback. Whether this is the case here is not clear, since this particular network will not converge when batch normalisation is disabled (be it with or without feedback). 
 
 \begin{figure}
       \centering
@@ -353,20 +358,31 @@ To test whether feedback can improve classification performance, the network is 
 \section{Conclusion}
 tell them what you told them 
 
-suggest future work 
+The feedback mechanism presented here is able to improve performance of conventional networks both in terms of convergence speed and convergence value in certain cases. The effectiveness of the mechanism is inconsistent across different datasets, with ...
+This allows two conclusions: (1) the effectiveness of the mechanism is data-dependent, i.e. it may be leveraging the highly regular structure of the MNIST dataset, ... , or (2) the implementation of the mechanism in the CIFAR-10 experiments is not .... Notably, in convolutional networks, feedback is given on a filter-wise basis, which may be too simplistic.  
+
+
+Noise
+
+
+Section \ref{cifarae} suggests that there may be an (unfavourable) interaction between the feedback mechanism and batch normalisation. Investigating why this is the case may shed further light on how the feedback works and what role it fulfils. 
+
+
+
+suggest future work: relationship feedback batchnorm 
 
 \bibliography{example_paper}
 \bibliographystyle{icml2017}
 
 \newpage
-
+\clearpage
 
 \section{Appendix}
 
 \subsection{Hyperparameter Tuning} 
 As mention in section \ref{mnist}, optimal values for $\beta_{max}$ and $\eta$ are determined by a grid search. The initial grid is defined by $\eta = [5, 10, 15, \dots, 50]$ and $\beta_{max} = [0.1, 0.2, \dots, 0.8]$. 
 
-The highest value for $\beta_{max} \ (0.8)$ consistently shows the best performance regardless of $\eta$'s values, as exemplified by figure \ref{fig:hyper1}. Note that a high constant value of $\eta$ with varying values for $\beta_{max}$ will generally lead to less spread between the loss curves, since the activation function will be more sensitive to $\beta_{max}$ when $\eta$ is low. 
+The highest value for $\beta_{max} \ (0.8)$ consistently shows the best performance regardless of $\eta$'s values, as exemplified by figure \ref{fig:hyper1}. Note that a high constant value of $\eta$ with varying values of $\beta_{max}$ will generally lead to less spread between the loss curves, since the activation function will be more sensitive to $\beta_{max}$ when $\eta$ is low. 
 
 \begin{figure}[H]
       \centering
@@ -387,6 +403,16 @@ While higher values of $\beta_{max}$ lead to better performance, the inverse rel
  \end{figure}
  
 A second grid search with $\eta = [1, 2, 3, 4, 5], \beta_{max} = [0.8, 0.85, 0.9, 0.95]$ is performed to determine whether even lower/higher values can further improve performance. Indeed, increasing $\beta_{max}$ to $0.95$ leads to better performance, but further decreasing $\eta$ is not advantegeous. 
+
+\subsection{Visualising Activations} 
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,keepaspectratio]{img/appendix/actvis/firstpass.png}
+      \includegraphics[width=0.5\textwidth,keepaspectratio]{img/appendix/actvis/secondpass.png}
+      \caption{Top: first pass, bottom: second pass}
+      \label{fig:actvis}
+  \end{figure}
+
 
 
 \subsection{Feedback-Controlled Threshold} 
@@ -429,13 +455,35 @@ As can be seen in figure \ref{fig:threshold}, the added threshold mechanism is n
   
   
  \subsection{Input With Reduced Contrast}
+Images with reduced contrast are presented to the trained (on regular contrast images) network, to see if the second pass can reconstruct an image that is more akin to a regular contrast image. To reduce the contrast, each pixel of the image is multiplied by some contrast factor $0 \leq c \leq 1$. 
+
+Figure \ref{fig:contrastdiff} shows the absolute difference in mean pixel value between the first and second pass reconstructions for a number of different contrast factors. A high contrast input image leads to a larger difference in mean pixel value, while a low contrast image leads to a smaller difference between first and second pass reconstructions. 
+
+
+
+
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/contrast/diff.png}
-            \caption{Absolute difference in mean pixel value between the two reconstructions as a function of different contrast factors (from 0.1 to 1)}
-      \label{fig:noiseact}
-  \end{figure},,        km, kk,,,,....................,,,,,,,,k
+            \caption{Absolute difference in mean pixel value between first and second pass reconstructions as a function of different contrast factors (from $0.0$ to $1.0$ in $0.1$ increments). A contrast factor of $1.0$ corresponds to no reduction in contrast, while a contrast factor of $0.0$ means the input images are entirely black.}
+      \label{fig:contrastdiff}
+  \end{figure}
+  
+  
+  \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/contrast/contrastrec.png}
+            \caption{From top to bottom: original image, contrast reduced image, first pass reconstruction, second pass reconstruction. The contrast reduced image was produced by multiplying the original image with a contrast factor of $0.5$, i.e. each pixel in the contrast reduced image has values in the range $[0.0, 0.5]$ instead of $[0.0, 1.0]$}
+      \label{fig:contrastdiff}
+  \end{figure}
 
+  
+  
+ \subsection{Reflections} 
+ 
+ material learned: got more comfortable with neural nets (theory - practice divide), initialisations, batchnorm, data normalisation 
+ 
+ 
 
 \end{document} 
 

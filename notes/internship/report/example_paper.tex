@@ -196,10 +196,12 @@ If e.g. dropout is only applied on the last pass, the remaining units will still
 In convolutional neural networks \cite{lecun1989generalization}, feedback is implemented on a filter-wise basis, i.e. each neuron does not receive its own unique feedback signal, but rather every filter receives a unique feedback signal that is shared between all units belonging to that filter. 
 
 
-\section{MNIST}
-\label{mnist}
+\section{Experimental Results}
 GIVE SOME INTRODUCTION TO EXPERIMENT SECTION HERE (SHOULD TIE BACK INTO THE RESEARCH QUESTIONS POSED IN THE INTRODUCTION)
 
+
+\subsection{MNIST}
+\label{mnist}
 The MNIST dataset is composed of $28 \times 28$ pixel binary images of handwritten digits, split into $60000$ training and $10000$ test instances \cite{lecun2010mnist}. Each image is associated with one of ten classes representing the digits between $0$ and $9$. 
 
 The models used in the following experiments are based on a (non-convolutional) autoencoder with two encoding and two decoding layers. The input layer has dimension $(1\times784)$, the first encoding layer (E1) outputs data of dimension $(1\times392)$, the second (E2) of dimension $(1\times196)$, the first decoding layer (D1) of dimension $(1\times392)$ and the second decoding layer (D2) restores the data back to its original dimension. Except for the final layer, each layer is followed by a ReLU activation. The final layer makes use of a sigmoid activation function. 
@@ -225,7 +227,7 @@ To increase the difficulty of the task, the dimension of the second encoding lay
 
 (results) 
 
-\subsection{More Than Two Timesteps}
+\subsubsection{More Than Two Timesteps}
 \label{timesteps}
 While at least two timesteps are required to incorporate feedback, it is not clear whether exactly two timesteps should be used or whether $>2$ timesteps can be beneficial. To examine this, autoencoders with 1, 2, 4, 6, and 8 timesteps are trained. 
 
@@ -242,7 +244,7 @@ The results, depicted in figure \ref{fig:timesteps}, show that more than two tim
   \end{figure}
  
  
-\subsection{Comprehensive Feedback}
+\subsubsection{Comprehensive Feedback}
 In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more opportunities to incorporate feedback. Specifically, in the following, each layer receives feedback from every layer above it.
 
   \begin{figure}
@@ -254,7 +256,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   
   As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better performance than the model with only partial feedback. 
     
- \subsection{Feedback vs Constant Gain} 
+ \subsubsection{Feedback vs Constant Gain} 
  In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
  
  Figure \ref{fig:partialhists} shows the data as collected in the network with a single feedback connection. 
@@ -294,7 +296,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   Clearly, the effects of feedback cannot be fully explained by this constant gain, but the idea of a constant gain seems to have some merit. 
 
 
-\subsection{Noisy Activations} 
+\subsubsection{Noisy Activations} 
 \label{noisyacts}
 While noisy signals are usually not an issue in artificial networks, noise in the brain is very prevalent \cite{Faisal2008}. To see whether feedback makes the model more robust to noise, gaussian noise with zero mean and various standard deviations is added to the (pre-)activations of both the network with feedback and the one without it. The networks are only evaluated with added noise, training is performed without noise. Note that in the network with feedback, noise is added to the activations in both passes.    
 
@@ -323,10 +325,10 @@ While noisy signals are usually not an issue in artificial networks, noise in th
   \end{figure}
 
   
-\section{CIFAR-10}
+\subsection{CIFAR-10}
 The CIFAR-10 dataset is composed of $32\times32$ pixel colour images of various objects, split into 50000 training and 10000 test instances. Each image belongs to one of the following classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck \cite{krizhevsky2014cifar}. 
 
-\subsection{Autoencoder}
+\subsubsection{Autoencoder}
 \label{cifarae}
 Similarly to the MNIST experiments, an autoencoder is trained on the CIFAR-10 dataset. Again, the architecture consists of two encoding and two decoding layers. Contrary to MNIST, the encoding/decoding layers used here are convolutional/transposed convolutional layers with 16 $5 \times 5$ filters. 
 
@@ -348,12 +350,12 @@ Curiously, if batch normalisation \cite{ioffe2015batch} is used after the activa
       \label{fig:cifarautobatch}
   \end{figure}
 
-\subsection{Noisy Activations}
+\subsubsection{Noisy Activations}
 The experiment from section \ref{noisyacts} is repeated on the CIFAR-10 dataset. The network employed is the autoencoder without batch normalisation from the previous experiment. 
 
 Since feedback increased the robustness to noise in the MNIST autoencoder, the same behaviour would be expected here. However, as apparent in figure \ref{fig:cifarnoise}, the network with feedback is much more sensitive to (even small amounts of) noise than the one without feedback. 
 
-compounding effect   
+This may be an indication that the feedback learned by the network is fundamentally different from the feedback learned in the MNIST experiments, such that it has a compounding effect on noise, rather than a rectifying one. 
 
 \begin{figure}
       \centering
@@ -362,7 +364,7 @@ compounding effect
       \label{fig:cifarnoise}
   \end{figure}
 
-\subsection{Classification} 
+\subsubsection{Classification} 
 Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling \cite{zhou1988computation} layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax \cite{bridle1990probabilistic} layer. 
 Batch normalisation is applied after the pooling layers and dropout with a rate of $0.5$ is applied after the pooling and the fully connected layers. 
 

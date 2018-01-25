@@ -101,20 +101,24 @@ Feedback connections play a prominent role in the human brain but have not recei
 
 \section{Introduction}
 \label{introduction}
-The brain has served as inspiration for practical models called artificial neural networks (ANNs) for decades. While these models are usually heavily simplified compared to the brain, they have seen massive success in areas such as computer vision, speech recognition, (...), in recent times. 
+The brain has served as inspiration for artificial neural networks (ANNs) for decades. While these models are usually heavily simplified compared to the brain, they have seen significant successes in areas such as computer vision, speech recognition, (...), in recent times. 
 
-Despite successes, it is clear that the average human brain is vastly more powerful than any model used in practice today, and as such it may be useful to investigate how and where exactly the brain and ANNs differ. 
+Despite successes, it is clear that the average human brain is vastly more powerful and versatile than any model used in practice today, and as such it may be useful to investigate how and where exactly the brain and ANNs differ. 
 
-While there is clear evidence of prominent feedback connections in the brain, ANNs have overwhelmingly been designed based on solely the feed forward paradigm. Thus, it is of interested if and how the incorporation of feedback may help artificial models. Further, ANNs with feedback are naturally easier to investigate and manipulate than the real brain and could potentially offer insights into exactly what role this mechanism plays in the brain. 
+One such discrepancy between ANNs and the brain is the existence of feedback, or top-down connections. While there is clear evidence of prominent feedback connections in the brain, ANNs have overwhelmingly been designed based on the feedforward paradigm. 
 
-(maybe tell that ornithology story)
+Networks that do not work solely on the feedforward principle exist and are called recurrent neural networks (RNNs), but most RNNs used in practice today focus on recurrent connections from one layer to itself (e.g. LSTM networks \cite{hochreiter1997long}), which, while recurrent, arguably do not constitute top-down connections. These networks are typically applied on problems where the input consists of sequence data, where the recurrence allows for memory of previously seen elements of the sequence. 
 
-In the remainder of this paper, some neuroscientific background is explored, a specific model of a feedback mechanism is examined and in the following section simplified to be incorporated into artificial models. Then experiments results discussion... 
+However, the usefulness of recurrent connections or feedback is not necessarily restricted to sequence data. [expand on this.. ornithology story?]
 
+While the network architectures considered in this paper feature real top down connections, the focus is not on the network topology itself, but on how these top down connections influence the behaviour of single neurons, i.e. a feedback mechanism.
 
-\section{Neuroscientific Background} 
- 
-\subsection{Neocortex}
+This feedback mechanism is derived from neuroscience literature and examined from two broad angles: (1) Whether the feedback mechanism can in any way improve on standard methods. Relevant metrics include convergence speed and performance quality of the trained network. (2) If examining the feedback's properties and how it behaves under certain conditions (e.g. noisy signals) can offer any insights into what role the feedback might fulfil in the brain. Needless to say, care has to be taken when trying to infer functionality of mechanisms in the brain from simplified artificial networks. Nevertheless, experimentation on artificial models offers an intriguing opportunity, as they are naturally easier to investigate and manipulate than the real brain. 
+
+In the remainder of this paper, some neuroscientific background is explored in section \ref{neocortex} to serve as context for the feedback mechanism, followed by a description of the feedback mechanism itself as it occurs in the brain (section \ref{cellmech}). In section \ref{fgrelu} the mechanism is adapted for use in ANNs and some practical consideration on its use are given in section \ref{inpractice}. The following sections describe a range of experiments with the intention to provide answers to the research questions posed above. 
+
+\section{Neuroscientific Background}  
+\label{neocortex}
 The neocortex, part of the cerebral cortex, is a part of the brain that evolved in mammals comparatively recently. It comprises around 80\% of the human brain \cite{markram2004} and is therefore often speculated to be responsible for the emergence of higher intelligence. 
 
 The most abundant type of neuron in the neocortex are pyramidal neurons, constituting between 70-85\% of cells. In contrast to the remaining neurons in the neocortex, so called interneurons, which are mostly inhibitory, pyramidal neurons are excitatory \cite{defelipe1992}. 
@@ -127,6 +131,7 @@ The neocortex appears to have a distinct structure which is characterised by its
 
 The further organisation into six layers was proposed by Brodman in 1909 [citation]. Layers 1 and 6 are of particular interest here. Layer 1 consists of almost no cell bodies, but mostly connections between axons and the apical dendrites of pyramidal neurons \cite{shipp2007}, i.e. is serves as a connection hub for feedback signals. Layer 6 sends signals to neurons in the thalamus which then in turn sends signals to layer 1 neurons in the same column \cite{shipp2007}, i.e. layers 1 and 6 create a loop where feedback is sent from layer 6 and received by layer 1.  
 \subsection{Distal Input to Pyramidal Neurons}
+\label{cellmech}
 As described above, apical tuft dendrites receive feedback input which appears to modulate the gain of the corresponding neuron \cite{larkum2004}. It is hypothesised that this is a way for the cortex to combine an internal representation of the world with external input, i.e. feedback to a neuron may predict whether this particular should be firing and even small feedforward input may lead the neuron to fire as long as the feedback signal is strong \cite{larkum2013cellular}. 
 
 Taking both feedforward and feedback input into account, the firing rate of a neuron can be modelled as follows \cite{larkum2004}:
@@ -139,6 +144,7 @@ Taking both feedforward and feedback input into account, the firing rate of a ne
 where $f$ is the firing rate of the neuron, $g$ the gain, $\mu_S$ the average somatic current (i.e. feedforward input), $\mu_D$ the average distal current (i.e. feedback input), $\alpha$ is an attenuation factor, $\sigma$ represents fluctuations in the current, $\theta$ is the firing threshold, and $\beta(\mu_D)$ is an increasing function of the dendritic mean current which saturates for values above some current threshold.  
 
 \section{Feedback-Gated Rectified Linear Units} 
+\label{fgrelu}
 The model described in the previous section serves as a basis to derive an activation function which can replace the common rectified linear unit (ReLU) \cite{nair2010rectified}, i.e. $f(x) = max(0, x)$.  
 
 To arrive at a more practical activation function, $g$ and $\theta$ are dropped from equation \ref{eq:neurogain}, since the threshold is modelled through the bias unit and the gain (i.e. slope) of a ReLU is by definition $1$ and can thus be safely dropped. Dropping the summands $\alpha \mu_D$ and $\sigma$ is less justifiable, but since they do not contribute to the core property of gain increase, they will be disregarded here, arriving at the following simplified relationship: 
@@ -174,10 +180,13 @@ Since negative values for $\mu_S$ are not taken account, it is replaced with $ma
 \end{equation}
 
 \subsection{Feedback-Gated ReLUs in Practice}
+\label{inpractice}
 The feedback path attempts to mimic the top-down path in the brain. As such, the origin of feedback terminating in a layer should be a layer that is higher in the (feedforward) hierarchy. 
 
 Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLUs into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
 	Although more than two timesteps are not necessary, it is possible to use an arbitrary number of timesteps, which is examined in section \ref{timesteps}.
+	
+	UNROLLING 
 	
 Any layer that receives feedback requires an additional set of weights to compute $\mu_D$. Specifically each layer $h_i$ with size $n$ receiving feedback from layer $h_j$ with size $m$ introduces $n \times m$ additional parameters.  
 	

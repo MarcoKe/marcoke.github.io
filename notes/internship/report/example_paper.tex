@@ -217,15 +217,23 @@ First experiments were performed with only a single feedback connection between 
 Optimal values for $\eta$ and $\beta_{max}$ were determined by a grid search ($\beta_{max}=0.95, \eta=5$).
  \begin{figure}
       \centering
-      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fb_vs_nofb.png}
-      \caption{Placeholder, make sure to update this figure}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/mnist196test.png}
+      \caption{Test set loss of autoencoders with and without feedback. The dimension of the second encoding layer is 196. }
       \label{fig:fbvsnofb}
   \end{figure}
   
-To increase the difficulty of the task, the dimension of the second encoding layer is reduced to 10 and the experiment is repeated (this modification will persist in all subsequent experiments).
+Figure \ref{fig:fbvsnofb} shows the loss curves for the autoencoder with and without feedback. While the autoencoder with feedback converges noticeably faster, the difference is not ... 
 
-(results) 
+It is conceivable that feedback might have a greater effect if the difficulty of the task is increased. Difficulty is not a well defined term, but reducing the dimension of the second encoding layer (i.e. the bottleneck) can arguably seen as an increase in difficulty. 
+The dimension of the second encoding layer is thus reduced to 10 and the experiment is repeated (this modification will persist in all subsequent experiments). Indeed, figure \ref{fig:fbvsnofb10} shows a much larger gap between the autoencoder with feedback and the one without it. 
 
+\begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/mnist10test.png}
+      \caption{Test set loss of autoencoders with and without feedback. The dimension of the second encoding layer is 10. }
+      \label{fig:fbvsnofb10}
+  \end{figure}
+  
 \subsubsection{More Than Two Timesteps}
 \label{timesteps}
 While at least two timesteps are required to incorporate feedback, it is not clear whether exactly two timesteps should be used or whether $>2$ timesteps can be beneficial. To examine this, autoencoders with 1, 2, 4, 6, and 8 timesteps are trained. 
@@ -238,28 +246,28 @@ The results, depicted in figure \ref{fig:timesteps}, show that more than two tim
 \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/timesteps_test.png}
-      \caption{Performance with varying numbers of timesteps. Each configuration was trained and evaluated 10 times. The curves shown are the averaged losses on the test set.}
+      \caption{Autoencoder performance with varying numbers of timesteps. Each configuration was trained and evaluated 10 times. The curves shown are the averaged losses on the test set.}
       \label{fig:timesteps}
   \end{figure}
  
  
 \subsubsection{Comprehensive Feedback}
-In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more possible configurations that incorporate more feedback connections. In the following experiment, each layer receives feedback from every layer above it, i.e. every possible top-down connection is present in the network. This will be referred to as \emph{comprehensive} feedback, whereas the previous approach will be referred to as \emph{partial} feedback. 
+In the previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more possible configurations that incorporate further feedback connections. In the following experiment, each layer receives feedback from every layer above it, i.e. every possible top-down connection is present in the network. This will be referred to as \emph{comprehensive} feedback, whereas the previous approach will be referred to as \emph{partial} feedback. 
 
   \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/fullfb.png}
-      \caption{Placeholder, make sure to update this figure}
+      \caption{Loss on the test set of autoencoders without feedback, partial feedback, and comprehensive feedback. Note that the horizontal axis is different from previous figures, i.e. the training time is longer. }
       \label{fig:fullfeedback}
   \end{figure}
   
-  As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better performance than the model with only partial feedback. 
+  As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better value than the model with only partial feedback. 
     
  \subsubsection{Feedback vs Constant Gain} 
  \label{constantgain}
- In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
+ In an effort to gain some understanding on how exactly feedback helps to improve performance, the frequency of different feedback values is examined.  A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
  
- Figure \ref{fig:partialhists} shows the data as collected in the network with a single feedback connection. 
+ Figure \ref{fig:partialhists} shows the data as collected in a network with a single feedback connection. 
  
  \begin{figure}
       \centering
@@ -287,7 +295,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/constgainfull_loss.png}
-      \caption{Placeholder, make sure to update this figure}
+      \caption{Placeholder, make sure to update this figuree}
       \label{fig:contgainfullloss}
   \end{figure}
   
@@ -506,7 +514,7 @@ Figure \ref{fig:contrastdiff} shows the absolute difference in mean pixel value 
       \label{fig:contrastdiff}
   \end{figure}
 
-\subsection{Additional plots for section \ref{cifarclass}}
+\subsection{Additional plots for section \ref{cifarclass} (CIFAR-10 Classification)}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/testacc.png}
@@ -518,7 +526,7 @@ Figure \ref{fig:contrastdiff} shows the absolute difference in mean pixel value 
 	\includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainlossma.png}
 
 
-            \caption{CIFAR-10 classification as seen in section \ref{cifarclass}. From top to bottom: test set accuracy, training set loss, training set accuracy, training set loss with a moving average filter (window size 100). }
+            \caption{CIFAR-10 classification as seen in section \ref{cifarclass}. From top to bottom: test set accuracy, training set loss, training set accuracy, training set loss after applying a moving average filter (window size 100). }
       \label{fig:addcifarclass}
   \end{figure}
 

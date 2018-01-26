@@ -197,8 +197,7 @@ In convolutional neural networks \cite{lecun1989generalization}, feedback is imp
 
 
 \section{Experimental Results}
-GIVE SOME INTRODUCTION TO EXPERIMENT SECTION HERE (SHOULD TIE BACK INTO THE RESEARCH QUESTIONS POSED IN THE INTRODUCTION)
-
+The preceding sections describe a feedback mechanism and how it can be implemented in practice. Here, a range of experiments is performed to observe how this feedback mechanism changes the behaviour of ANNs. Several networks are applied on two datasets, MNIST \cite{lecun2010mnist} and CIFAR-10 \cite{krizhevsky2014cifar}. Specifically, the experiments are designed to answer the research questions posed in the introduction: (1) whether feedback can improve the performance of ANNs, (2) whether observing how the feedback works in artificial models can reveal any clues on what function feedback has in the brain. Sections \ref{constantgain}, \ref{noisyacts}, and \ref{noisycifar} serve to answer the latter question, where section \ref{constantgain} is more of a general analysis of feedback, while sections \ref{noisyacts} and \ref{noisycifar} test whether feedback might increase the networks robustness to noise. The remaining sections are concerned primarily with question (1) in that they test convergence speed and performance quality in various configurations. 
 
 \subsection{MNIST}
 \label{mnist}
@@ -245,7 +244,7 @@ The results, depicted in figure \ref{fig:timesteps}, show that more than two tim
  
  
 \subsubsection{Comprehensive Feedback}
-In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more opportunities to incorporate feedback. Specifically, in the following, each layer receives feedback from every layer above it.
+In previous experiments, feedback was only sent from one decoding layer to one encoding layer. Naturally, there are many more possible configurations that incorporate more feedback connections. In the following experiment, each layer receives feedback from every layer above it, i.e. every possible top-down connection is present in the network. This will be referred to as \emph{comprehensive} feedback, whereas the previous approach will be referred to as \emph{partial} feedback. 
 
   \begin{figure}
       \centering
@@ -257,6 +256,7 @@ In previous experiments, feedback was only sent from one decoding layer to one e
   As shown in figure \ref{fig:fullfeedback}, the configuration explained above does not only converge faster than a standard autoencoder, but also settles to a better performance than the model with only partial feedback. 
     
  \subsubsection{Feedback vs Constant Gain} 
+ \label{constantgain}
  In an effort to get some understanding how exactly incorporation helps to improve performance, the feedback values computed by a network for all instances of the test set are visualised in a histogram. A distinction is made between feedback and gain, where feedback refers to $\mu_D$ and gain refers to $\frac{1}{1 - min(\frac{\beta_{max}}{\eta} \ (\mu_D), \beta_{max})}$. 
  
  Figure \ref{fig:partialhists} shows the data as collected in the network with a single feedback connection. 
@@ -351,6 +351,7 @@ Curiously, if batch normalisation \cite{ioffe2015batch} is used after the activa
   \end{figure}
 
 \subsubsection{Noisy Activations}
+\label{noisycifar}
 The experiment from section \ref{noisyacts} is repeated on the CIFAR-10 dataset. The network employed is the autoencoder without batch normalisation from the previous experiment. 
 
 Since feedback increased the robustness to noise in the MNIST autoencoder, the same behaviour would be expected here. However, as apparent in figure \ref{fig:cifarnoise}, the network with feedback is much more sensitive to (even small amounts of) noise than the one without feedback. 
@@ -365,6 +366,7 @@ This may be an indication that the feedback learned by the network is fundamenta
   \end{figure}
 
 \subsubsection{Classification} 
+\label{cifarclass}
 Classification on the CIFAR-10 dataset is performed using a convolutional neural network. The network consists of two convolutional layers with 64 filters of size $5 \times 5$, each followed by a max pooling \cite{zhou1988computation} layer with a $2\times2$ window and a stride of $2$. The convolution  and pooling layers are followed by a fully connected layer (200 units) and a softmax \cite{bridle1990probabilistic} layer. 
 Batch normalisation is applied after the pooling layers and dropout with a rate of $0.5$ is applied after the pooling and the fully connected layers. 
 
@@ -503,6 +505,23 @@ Figure \ref{fig:contrastdiff} shows the absolute difference in mean pixel value 
             \caption{From top to bottom: original image, contrast reduced image, first pass reconstruction, second pass reconstruction. The contrast reduced image was produced by multiplying the original image with a contrast factor of $0.5$, i.e. each pixel in the contrast reduced image has values in the range $[0.0, 0.5]$ instead of $[0.0, 1.0]$}
       \label{fig:contrastdiff}
   \end{figure}
+
+\subsection{Additional plots for section \ref{cifarclass}}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/testacc.png}
+      
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainloss.png}
+
+	\includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainacc.png}
+	
+	\includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainlossma.png}
+
+
+            \caption{CIFAR-10 classification as seen in section \ref{cifarclass}. From top to bottom: test set accuracy, training set loss, training set accuracy, training set loss with a moving average filter (window size 100). }
+      \label{fig:addcifarclass}
+  \end{figure}
+
 
   
   

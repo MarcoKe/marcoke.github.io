@@ -186,9 +186,9 @@ The feedback path attempts to mimic the top-down path in the brain. As such, the
 Since feedback from higher layers can only be computed if these higher layers have received feedforward input, at least two time steps are needed to incorporate the modified ReLUs into a network. Concretely, some data, e.g. an image is fed into the network twice, where the first pass enables the computation of feedback which can be utilised in the second pass. 
 	Although more than two timesteps are not necessary, it is possible to use an arbitrary number of timesteps, which is examined in section \ref{timesteps}.
 	
-	UNROLLING 
-	
 Any layer that receives feedback requires an additional set of weights to compute $\mu_D$. Specifically each layer $h_i$ with size $n$ receiving feedback from layer $h_j$ with size $m$ introduces $n \times m$ additional parameters.  
+
+The resulting networks can then be unrolled to create a feedforward network, so that for $t$ timesteps, each layer occurs $t$ times, while using the same weights at each timestep. Since the unrolled network is purely feedforward, backpropagation can be applied without any modifications. 
 	
 Dropout \cite{srivastava2014dropout} should be used by dropping out the same units in all passes.  
 If e.g. dropout is only applied on the last pass, the remaining units will still receive signals from dropped out units in previous passes.
@@ -210,7 +210,8 @@ First experiments were performed with only a single feedback connection between 
 \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/AutoEnc.png}
-      \caption{Autoencoder with (partial) feedback.}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/AutoEncUnrolled.png}
+      \caption{Left: autoencoder with (partial) feedback. Right: Unrolled autoencoder.}
       \label{fig:autoenc}
   \end{figure}
   
@@ -390,23 +391,20 @@ Note that the network employed here makes use of batch normalisation, which, as 
   \end{figure}
   
 \section{Conclusion}
-tell them what you told them 
+The feedback mechanism presented here is able to improve performance of conventional networks both in terms of convergence speed and performance of the trained network when applied on the MNIST dataset. The benefits of feedback are less clear, however, when applied on the CIFAR-10 dataset. In principle, an autoencoder with feedback can outperform a corresponding autoencoder without feedback to a small degree, but this positive effect of feedback is negated when batch normalisation is utilised in the autoencoders.  
+Feedback appears to have some positive effect when performing classification on CIFAR-10, although this effect is so small that drawing any firm conclusions seems ill-advised. 
 
-The feedback mechanism presented here is able to improve performance of conventional networks both in terms of convergence speed and convergence value in certain cases. The effectiveness of the mechanism is inconsistent across different datasets, with ...
-This allows two conclusions: (1) the effectiveness of the mechanism is data-dependent, i.e. it may be leveraging the highly regular structure of the MNIST dataset, ... , or (2) the implementation of the mechanism in the CIFAR-10 experiments is not .... Notably, in convolutional networks, feedback is given on a filter-wise basis, which may be too simplistic.  
+When investigating the networks robustness to noise, an even larger divide between performance on MNIST and CIFAR-10 can be observed. On CIFAR-10, feedback is not only not beneficial, it actually heavily increases the network's sensitivity to noise, while the MNIST autoencoder becomes more robust when feedback is present. 
 
+A possible explanation for this difference across datasets could be that the effectiveness of the feedback mechanism is data-dependent, i.e. it may be leveraging the highly regular structure of the MNIST dataset and is thus not as useful on the less regularly structured CIFAR-10 dataset. 
 
-Noise
+A further general difference between the experiments on the two different datasets is the use of convolutional layers, which were not used in all of the CIFAR-10 experiments, but not in any of the MNIST experiments. It may be that providing feedback on a filter-wise basis is too simplistic, or that some other aspect related to convolution is not conducive to the feedback mechanism.   
 
+Further research on the combination of feedback and convolutional networks may lead to some configuration that allows for more clear benefits of feedback. 
 
 Section \ref{cifarae} suggests that there may be an (unfavourable) interaction between the feedback mechanism and batch normalisation. Investigating why this is the case may shed further light on how the feedback works and what role it fulfils. 
 
-
-
-suggest future work: relationship feedback batchnorm 
-
-multi modal 
-
+Another avenue of future research is the creation of feedback based multi-modal models, where sensory inputs from multiple different sources may be combined to perform e.g. a classification task. For instance, if a network receives both visual and auditory input, the barking of a dog may result (mediated by feedback) in a higher expectation to observe a dog in the visual input. 
 
 \bibliography{example_paper}
 \bibliographystyle{icml2017}
@@ -475,7 +473,7 @@ As can be seen in figure \ref{fig:threshold}, the added threshold mechanism is n
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/firstpass.png}
-      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/secondpass.png}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/secondpass2.png}
       \caption{T-SNE visualisation of the second encoding layer of the autoencoder over the whole MNIST test set. Top: first pass, bottom: second pass}
       \label{fig:tsne}
   \end{figure}
@@ -483,7 +481,7 @@ As can be seen in figure \ref{fig:threshold}, the added threshold mechanism is n
   \begin{figure}[H]
       \centering
       \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/noisefirstpass.png}
-      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/noisesecondpass.png}
+      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/mnist_tsne/noisesecondpass2.png}
       \caption{T-SNE visualisation of the second encoding layer of the autoencoder over the whole MNIST test set. Top: first pass, bottom: second pass}
       \label{fig:tsnenoise}
   \end{figure}
@@ -513,23 +511,30 @@ Figure \ref{fig:contrastdiff} shows the absolute difference in mean pixel value 
             \caption{From top to bottom: original image, contrast reduced image, first pass reconstruction, second pass reconstruction. The contrast reduced image was produced by multiplying the original image with a contrast factor of $0.5$, i.e. each pixel in the contrast reduced image has values in the range $[0.0, 0.5]$ instead of $[0.0, 1.0]$}
       \label{fig:contrastdiff}
   \end{figure}
-
-\subsection{Additional plots for section \ref{cifarclass} (CIFAR-10 Classification)}
+  
+  
+ \subsection{Additional plots for section \ref{cifarclass} (CIFAR-10 Classification)}
 \begin{figure}[H]
       \centering
-      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/testacc.png}
+      \includegraphics[width=\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/testacc.png}
       
-      \includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainloss.png}
+      \includegraphics[width=\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainloss.png}
 
-	\includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainacc.png}
+	\includegraphics[width=\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainacc.png}
 	
-	\includegraphics[width=0.5\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainlossma.png}
+	\includegraphics[width=\textwidth,height=5cm,keepaspectratio]{img/appendix/cifarclass/trainlossma.png}
 
 
             \caption{CIFAR-10 classification as seen in section \ref{cifarclass}. From top to bottom: test set accuracy, training set loss, training set accuracy, training set loss after applying a moving average filter (window size 100). }
       \label{fig:addcifarclass}
   \end{figure}
 
+\begin{figure*}
+      \centering
+      \includegraphics[width=\textwidth,keepaspectratio]{img/appendix/fullhists.png}
+      \caption{Autoencoder performance with varying numbers of timesteps. Each configuration was trained and evaluated 10 times. The curves shown are the averaged losses on the test set.}
+      \label{fig:timesteps}
+  \end{figure*}
 
   
   

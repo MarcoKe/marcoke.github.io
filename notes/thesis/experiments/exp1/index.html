@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Thesis Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+        <h4>Experimental Setup</h4>
+        A grid of (#taxa, %corruption) configurations is explored. Each configuration is tested 10 times, each time with a 
+        randomly generated tree. <br> 
+        Taxa: [6, 7, 8, 9, 10, 11] <br> 
+        Corruption: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+        <h4 id="genterm">Histograms for every run</h4>        
+        <a href="lotsahistograms.png">Histograms (lots)</a> <br> 
+        Each row shows all repetitions for each one configuration. 
+        Histogram titles follow the format "t11_c40_4", meaning 11 taxa, 40% corruption, repetition #4.
+
+        <h4>Unique Values</h4>
+        <center><img src="taxavsunique.png"> <img src="corrvsunique.png"></center>
+
+        <h4>Frequency by size</h4>
+        <center><img src="taxavsvalues.png"> <img src="corrvsvalues.png"></center>
+
+        <h4>Time</h4>
+        <center><img src="taxavstime.png"> <img src="corrvstime.png"> </center>
+
+        <h4>Time stats</h4>
+        <center><img src="taxavstimestats.png"><img src="corrvstimestats.png"></center>
+
+        <h4>Unique Vs Time</h4>
+        <center><img src="uniquevstime.png"></center>
+        
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

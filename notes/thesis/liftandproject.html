@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Thesis Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+
+        <h4 id="genterm">Lift-and-Project</h4>
+        The lift-and-project approach is a method to find inequalities that are valid for the ILP but are violated at the optimal 
+        solution to the LP-relaxation. As a consequence, adding these inequalities to the LP-relaxation tightens the formulation 
+        and strengthens the lower bounds in a branch-and-bound framework. 
+
+        <br><br> 
+
+        <strong>Integer Polytope:</strong> feasible region of ILP, convex hull of integer solutions <br> 
+        <strong>relaxed polytope:</strong> feasible region of LP-relaxation <br> 
+
+        <br> 
+
+        <center><img src="img/intrelaxpolytope.png" width="200px"></center> <br> 
+
+        <strong>Goal: </strong> We want to design a relaxed polytope that is as close to the integer polytope as possible. <br> 
+        Lift-and-Project methods give, starting from some initial relaxation, a hierarchy of relaxation where the final relaxation gives the integer 
+        polytope (which takes exponential time to solve). 
+        Relaxation inbetween the initial and final one take somewhere between polynomial and exponential time to solve.  
+
+        <br> <br> 
+
+        <hr> 
+        <strong>Basic idea:</strong> try to simulate non-linear programming using linear programming by introducing auxiliary variables for
+        the non-linear terms.  <br> <br> 
+
+        <em>Example: </em> quadratic program for Vertex-Cover <br> 
+        &nbsp;&nbsp;&nbsp;&nbsp; \(0 \leq x_i \leq 1 \ \ \ \forall i \in V\) <br> 
+        &nbsp;&nbsp;&nbsp;&nbsp;\((1-x_i)(1-x_j) = 0 \ \ \ \) for each \(\{i, j\} \in E \) <br> <br> 
+
+        To simulate this: introduce variables \(y_{ij} \geq 0\) with the intention that \(y_{ij}\) represents the product \(x_i x_j\). <br> 
+        This is the <strong>lift</strong> step, which lifts the problem to a higher dimensional space. <br> <br> 
+
+        To get a solution for the original problem from a solution to the new problem we simply project it back onto the variables \(x_i\) 
+        (<strong>project</strong> step). We may still end up with a relaxed polytope since we have no way of ensuring that 
+        \(y_{ij} = x_i x_j\) in every solution of the lifted problem, but this relaxation can be no worse then the original LP-relaxation. 
+
+        <br><br> 
+        <hr> 
+        <strong>In Detail: </strong>
+
+        <br><br>
+        <hr> 
+        <strong>References: </strong> <br> 
+        [0] <a href="https://www.cs.princeton.edu/courses/archive/spr05/cos598B/liftproj.pdf">https://www.cs.princeton.edu/courses/archive/spr05/cos598B/liftproj.pdf</a>
+
+        
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

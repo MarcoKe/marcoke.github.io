@@ -38,20 +38,27 @@
         <a href="lotsahistograms.png">Histograms (lots)</a> <br> 
         Each row shows all repetitions for each one configuration. 
         Histogram titles follow the format "t11_c40_4", meaning 11 taxa, 40% corruption, repetition #4.
+        Horizontal axes show the values the decision variables take. Vertical axes show frequencies of values. 
 
-        <h4>Unique Values</h4>
+        <h4>Numer of Unique Values</h4>
+        Here, the number of unique values the decision variables take are explored with respect to the number of taxa 
+        and the amount of corruption. To handle numerical inaccuracies, two values are treated as equivalent if they are identical 
+        up to the first 4 decimal places. <br><br>
+
         <center><img src="taxavsunique.png"> <img src="corrvsunique.png"></center>
 
-        <h4>Frequency by size</h4>
+        <h4>Unique Values and their Frequencies</h4>
+        Each circle represents a unique value. The size of the circle is determined by how frequent this value occurs. <br><br>
         <center><img src="taxavsvalues.png"> <img src="corrvsvalues.png"></center>
 
-        <h4>Time</h4>
+        <h4>Running Time</h4>
         <center><img src="taxavstime.png"> <img src="corrvstime.png"> </center>
 
         <h4>Time stats</h4>
+        Means are represented by circles and variances are represented by error bars. <br><br>
         <center><img src="taxavstimestats.png"><img src="corrvstimestats.png"></center>
 
-        <h4>Unique Vs Time</h4>
+        <h4>#Unique Values Vs Time</h4>
         <center><img src="uniquevstime.png"></center>
         
     <script>

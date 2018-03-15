@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/skeleton.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    
+
+    <title>Thesis Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <div style="width: 60%; margin: 0 auto; ">
+        
+        <h4>Experimental Setup</h4>
+        A grid of (#taxa, %corruption) configurations is explored. Each configuration is tested 10 times, each time with a 
+        randomly generated tree. <br> 
+        Taxa: [6, 7, 8, 9, 10, 11] <br> 
+        Corruption: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+        <br><br>
+        <a href="frac.zip">Raw Data</a>
+        <br>Jupyter Notebook<a href="frac.ipynb"> (Source</a>/ <a href="frac.html">HTML)</a>
+
+        <h4 id="genterm">Histograms for every run</h4>        
+        <a href="lotsahistograms.png">Histograms (lots)</a> <br> 
+        Each row shows all repetitions for one configuration. 
+        Histogram titles follow the format "t11_c40_4", meaning 11 taxa, 40% corruption, repetition #4.
+        Horizontal axes show the values the decision variables take. Vertical axes show frequencies of these values. 
+
+        <h4>Number of Unique Values</h4>
+        Here, the number of unique values the decision variables take are explored with respect to the number of taxa 
+        and the amount of corruption. To handle numerical inaccuracies, two values are treated as equivalent if they are identical 
+        up to the first 4 decimal places. <br><br>
+
+        <center><img src="taxavsunique.png"> <img src="corrvsunique.png"></center>
+
+        <h4>Unique Values and their Frequencies</h4>
+        Each circle represents a unique value. The size of the circle is determined by how frequently this value occurs. <br><br>
+        <center><img src="taxavsvalues.png"> <img src="corrvsvalues.png"></center>
+
+        <h4>Running Time</h4>
+        <center><img src="taxavstime.png"> <img src="corrvstime.png"> </center>
+
+        <h4>Time Stats</h4>
+        Means are represented by circles and variances are represented by error bars. <br><br>
+        <center><img src="taxavstimestats.png"><img src="corrvstimestats.png"></center>
+
+        <h4>#Unique Values Vs Time</h4>
+        Red: OLS regression line <br> <br>
+        <center><img src="uniquevstime.png"></center>
+        
+    <script>
+        renderMathInElement(document.body);
+    </script>
+</body>
+
+</html>

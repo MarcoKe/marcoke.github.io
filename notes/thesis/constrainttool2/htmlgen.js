@@ -9,25 +9,25 @@ function generateTripletView(tripletsIn) {
         html += "<span class='triplet' onclick='changeTriplet(this)' topology='0' id='" + i + "'>" + triplets[i].a + "," + triplets[i].b + "|" + triplets[i].c + "</span> ";
     }
 
-    document.getElementById("triplets").innerHTML = html;
+    $("#triplets").html() = html;
 }
 
 function changeTriplet(triplet) {
-    var a = triplet.innerHTML.split(",")[0];
-    var b = triplet.innerHTML.split(",")[1].split("|")[0];
-    var c = triplet.innerHTML.split("|")[1]
-    var topology = parseInt(triplet.getAttribute("topology"), 10) > 1 ? 0 : parseInt(triplet.getAttribute("topology"), 10)+1; 
-    triplet.setAttribute("topology", topology);
-    triplet.innerHTML = c + "," + a + "|" + b;
+    var a = $(triplet).html().split(",")[0];
+    var b = $(triplet).hmtl().split(",")[1].split("|")[0];
+    var c = $(triplet).html().split("|")[1]
+    var topology = parseInt($(triplet).attr("topology"), 10) > 1 ? 0 : parseInt($(triplet).attr("topology"), 10)+1; 
+    $(triplet).attr("topology") = topology;
+    $(triplet).html() = c + "," + a + "|" + b;
     var t = new RootedTriplet(parseInt(c, 10), parseInt(a, 10), parseInt(b, 10)); 
-    console.log(t);
-    triplets[parseInt(triplet.getAttribute("id"), 10)] = t;
+    triplets[parseInt($(triplet).attr("id"), 10)] = t;
     gen(generateConstraints(originalTriplets, triplets));
 }
 
 function generatePatternView(patterns) {
-    var div = document.getElementById("patterns"); 
-    div.innerHTML = "";
+    // var div = document.getElementById("patterns"); 
+    // div.innerHTML = "";
+    $("#patterns").html() = "";
     var patts = Array.from(patterns.keys()); 
     for (var i = 0; i < patts.length; i++) {
         var patternVis = "<svg width='90' height='120'>";
@@ -47,7 +47,8 @@ function generatePatternView(patterns) {
         patternVis += "<text x='0' y='70'>" + patterns.get(patts[i]).length + "</text>";
 
         patternVis += "</svg>";
-        div.innerHTML += patternVis; 
+        // div.innerHTML += patternVis; 
+        $("#patterns").html() += patternVis;
     }
 }
 
@@ -56,7 +57,6 @@ function gen(constraintGroups) {
     constraints = constraintGroups.constraints;
     var page = "<div class='constraintgroup'>original </div> <div class='constraintgroup2'>corrupted</div>"; 
     for (var i = 0; i < constraints.length; i++) {
-        console.log(corruptedConstraints[i].standard);
         page += corruptedConstraints[i].standard ? "<div class='groupheader'>" : "<div class='nonstandardgroupheader'>"; 
         page += "i=" + constraints[i].i + ", j=" + constraints[i].j + ", k=" + constraints[i].k + ", l=" + constraints[i].l + "</div><br>";
         page += "<div class='constraintgroup'>";
@@ -75,5 +75,7 @@ function gen(constraintGroups) {
         page += "</div>";
     }
 
-    document.getElementById("con").innerHTML = page;
+    // document.getElementById("con").innerHTML = page;
+    $("#con").html() = page;
+    // $("#con").html = page;
 }

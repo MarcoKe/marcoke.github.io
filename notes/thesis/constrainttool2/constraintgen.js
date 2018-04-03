@@ -152,13 +152,14 @@ function findPatterns(constraintGroups, corruptedConstraintGroups) {
         // }
 
         // console.log(pattern);
-        if (!patterns.has(p)) {
-            patterns.set(p, []); 
-        }
-        // patterns.set(p, patterns.get(p).push(i)); 
-        patterns.get(p).push(i);
+        // if (!patterns.has(p)) {
+        //     patterns.set(p, []); 
+        // }
+        // // patterns.set(p, patterns.get(p).push(i)); 
+        // patterns.get(p).push(i);
     }
-
+    var numStandard = 0; 
+    var numNonStandard = 0;
     for (var i = 0; i < corruptedConstraintGroups.length; i++) {
         pattern = ""; 
         pattern += corruptedConstraintGroups[i].c1.a.inObj ? 1 : 0; 
@@ -176,8 +177,13 @@ function findPatterns(constraintGroups, corruptedConstraintGroups) {
 
         var p = pattern;
 
+        
         if (!(p === s1 || p === s2 || p === s3 || p === s4 || p === s5 || p === s6 || p === s7)) {
             corruptedConstraintGroups[i].standard = false; 
+            numNonStandard++;
+        }
+        else {
+            numStandard++;
         }
         // if (constraintGroups[i].c1 === undefined || constraintGroups[i].c2 !== undefined || constraintGroups[i].c3 !== undefined || constraintGroups[i].c4 !== undefined) {continue;}
         // constraints = [constraintGroups[i].c1, constraintGroups[i].c2, constraintGroups[i].c3, constraintGroups[i].c4];
@@ -196,7 +202,7 @@ function findPatterns(constraintGroups, corruptedConstraintGroups) {
         patterns.get(p).push(i);
     }
 
-    generatePatternView(patterns);
+    generatePatternView(patterns, numStandard, numNonStandard);
     
 
 }

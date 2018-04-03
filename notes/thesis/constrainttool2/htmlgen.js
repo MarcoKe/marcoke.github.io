@@ -9,25 +9,27 @@ function generateTripletView(tripletsIn) {
         html += "<span class='triplet' onclick='changeTriplet(this)' topology='0' id='" + i + "'>" + triplets[i].a + "," + triplets[i].b + "|" + triplets[i].c + "</span> ";
     }
 
-    $("#triplets").html() = html;
+    $("#triplets").html(html);
 }
 
 function changeTriplet(triplet) {
     var a = $(triplet).html().split(",")[0];
-    var b = $(triplet).hmtl().split(",")[1].split("|")[0];
+    var b = $(triplet).html().split(",")[1].split("|")[0];
     var c = $(triplet).html().split("|")[1]
     var topology = parseInt($(triplet).attr("topology"), 10) > 1 ? 0 : parseInt($(triplet).attr("topology"), 10)+1; 
-    $(triplet).attr("topology") = topology;
-    $(triplet).html() = c + "," + a + "|" + b;
+    $(triplet).attr("topology", topology);
+    $(triplet).html(c + "," + a + "|" + b);
     var t = new RootedTriplet(parseInt(c, 10), parseInt(a, 10), parseInt(b, 10)); 
     triplets[parseInt($(triplet).attr("id"), 10)] = t;
     gen(generateConstraints(originalTriplets, triplets));
 }
 
-function generatePatternView(patterns) {
+function generatePatternView(patterns, numStandard, numNonStandard) {
     // var div = document.getElementById("patterns"); 
     // div.innerHTML = "";
-    $("#patterns").html() = "";
+    $("#standard").html(numStandard); 
+    $("#nonstandard").html(numNonStandard);
+    $("#patterns").html("");
     var patts = Array.from(patterns.keys()); 
     for (var i = 0; i < patts.length; i++) {
         var patternVis = "<svg width='90' height='120'>";
@@ -48,7 +50,7 @@ function generatePatternView(patterns) {
 
         patternVis += "</svg>";
         // div.innerHTML += patternVis; 
-        $("#patterns").html() += patternVis;
+        $("#patterns").append(patternVis);
     }
 }
 
@@ -76,6 +78,6 @@ function gen(constraintGroups) {
     }
 
     // document.getElementById("con").innerHTML = page;
-    $("#con").html() = page;
+    $("#con").html(page);
     // $("#con").html = page;
 }

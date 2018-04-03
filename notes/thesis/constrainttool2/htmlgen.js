@@ -56,7 +56,9 @@ function gen(constraintGroups) {
     constraints = constraintGroups.constraints;
     var page = "<div class='constraintgroup'>original </div> <div class='constraintgroup2'>corrupted</div>"; 
     for (var i = 0; i < constraints.length; i++) {
-        page += "<div class='groupheader'>i=" + constraints[i].i + ", j=" + constraints[i].j + ", k=" + constraints[i].k + ", l=" + constraints[i].l + "</div><br>";
+        console.log(corruptedConstraints[i].standard);
+        page += corruptedConstraints[i].standard ? "<div class='groupheader'>" : "<div class='nonstandardgroupheader'>"; 
+        page += "i=" + constraints[i].i + ", j=" + constraints[i].j + ", k=" + constraints[i].k + ", l=" + constraints[i].l + "</div><br>";
         page += "<div class='constraintgroup'>";
         page += constraints[i].c1.a.toString() + " + " + constraints[i].c1.b.toString() + " - " + constraints[i].c1.c.toString() + " <= 1 <br>"; 
         page += constraints[i].c2.a.toString() + " + " + constraints[i].c2.b.toString() + " - " + constraints[i].c2.c.toString() + " <= 1 <br>"; 

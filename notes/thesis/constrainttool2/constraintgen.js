@@ -31,6 +31,7 @@ function ConstraintGroup(i, j, k, l, c1, c2, c3, c4) {
     this.c2 = c2; 
     this.c3 = c3; 
     this.c4 = c4; 
+    this.standard = true;
 }
 
 function createExtTriplet(triplet, triplets) {
@@ -114,6 +115,13 @@ function Pattern(pattern) {
     };
 }
 function findPatterns(constraintGroups, corruptedConstraintGroups) {
+    var s1 = "000000000000"; 
+    var s2 = "001000001010";
+    var s3 = "010010010001"; 
+    var s4 = "100100000000";
+    var s5 = "100101100100";
+    var s6 = "011011111111";
+    var s7 = "111111111111";
     
     var patterns = new Map(); 
     for (var i = 0; i < constraintGroups.length; i++) {
@@ -168,7 +176,9 @@ function findPatterns(constraintGroups, corruptedConstraintGroups) {
 
         var p = pattern;
 
-
+        if (!(p === s1 || p === s2 || p === s3 || p === s4 || p === s5 || p === s6 || p === s7)) {
+            corruptedConstraintGroups[i].standard = false; 
+        }
         // if (constraintGroups[i].c1 === undefined || constraintGroups[i].c2 !== undefined || constraintGroups[i].c3 !== undefined || constraintGroups[i].c4 !== undefined) {continue;}
         // constraints = [constraintGroups[i].c1, constraintGroups[i].c2, constraintGroups[i].c3, constraintGroups[i].c4];
         // for (var j = 0; j < constraints.length; j++) {
@@ -187,5 +197,6 @@ function findPatterns(constraintGroups, corruptedConstraintGroups) {
     }
 
     generatePatternView(patterns);
+    
 
 }

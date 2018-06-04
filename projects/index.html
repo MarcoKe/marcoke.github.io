@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- skeleton -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0"
+        crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx"
+        crossorigin="anonymous"></script>
+
+    <title>Internship Notes</title>
+
+</head>
+
+<body>
+    <div class="navbar-spacer"></div>
+    <nav id="navMenu" ckass="navbar">
+        <script src="navbar.js"></script>
+    </nav>
+
+    <br><br>
+    <div style="width: 60%; margin: 0 auto; ">
+        <div class="entry"> 
+                <a href="internship.pdf">Research Internship Report</a> <br>
+                Title: <strong>Feedback-Gated Rectified Linear Units </strong><br>
+                Abstract: Feedback connections play a prominent role in the human brain but have not received 
+                much attention in artificial neural network research. Here, a biologically inspired feedback 
+                mechanism which gates rectified linear units is proposed. On the MNIST dataset, autoencoders 
+                with feedback show faster convergence, better performance, and more robustness to noise compared
+                 to their counterparts without feedback. Some benefits, although less pronounced and less consistent, 
+                 can be observed when networks with feedback are applied on the CIFAR-10 dataset. 
+
+        </div>
+
+        <br>
+        <div class="entry"> 
+                <a href="bachelorthesis.pdf">Bachelor Thesis</a> <br>
+                Title: <strong>Predicting Protein Levels In Cells </strong><br>
+                Abstract: This article presents linear regression and support
+                vector regression as techniques to predict
+                protein expressions. Various feature selection
+                techniques and, in the latter case, kernels are
+                examined with respect to their influence on prediction
+                performance. Both linear regression
+                with prior feature selection on the Lasso, as
+                well as support vector regression with a radial
+                basis function kernel prove to be useful prediction
+                techniques. Including gene data in the feature
+                space yields very limited success. Datasets
+                from different tissues prove to be not directly
+                compatible.
+
+        </div>
+        
+
+
+
+
+       
+    </div>
+    <script>
+        renderMathInElement(document.body, [{ left: "$$", right: "$$", display: false }, { left: "\\(", right: "\\)", display: false }]);
+    </script>
+</body>
+
+</html>

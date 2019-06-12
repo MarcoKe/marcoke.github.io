@@ -16,14 +16,15 @@
 
 
     <script type="text/javascript">
-
+    judithProportion = 0.53; 
+    gerdProportion = 0.47; 
 
     function calculateProportions() {
         var amount = document.getElementById("billamount").value;
         amount = amount.replace(/\./gi, '');
         amount = amount.replace(/,/gi, '.');
-        var judithAmount = 0.53 * amount;
-        var gerdAmount = 0.47 * amount;
+        var judithAmount = judithProportion * amount;
+        var gerdAmount = gerdProportion * amount;
         var judith = document.getElementById("judithamount");
         var gerd = document.getElementById("gerdamount");
         // judith.value = judithAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -38,6 +39,22 @@
         num = num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
         return num;
+    }
+
+    function changeProportions(judith, gerd) {
+        judithProportion = judith; 
+        gerdProportion = gerd; 
+        calculateProportions();
+        document.getElementById("showJudithPercent").innerHTML =  formatNumber(judith*100)+ "&percnt;"
+        document.getElementById("showGerdPercent").innerHTML =  formatNumber(gerd*100) + "&percnt;"
+
+    }
+
+    function colorSelected(s) {
+        document.getElementById("hausButton").className = "btn btn-default"; 
+        document.getElementById("hausratButton").className = "btn btn-default"; 
+
+        document.getElementById(s).className = "btn btn-success";
     }
     </script>
 
@@ -98,11 +115,13 @@
                 <div class="input-group">
                     <span class="input-group-addon" id="sequence1">Rechnungsbetrag</span>
                     <input id="billamount" type="text" value="" class="form-control"
-                    aria-describedby="sequence1">
+                    aria-describedby="sequence1" oninput="calculateProportions()">
                 </div>
                 <br>
-                <input type="button" id="calcButton" onclick="calculateProportions()" value="Anteile berechnen" name="calculate"
-                class="btn btn-info">
+                <input type="button" id="hausButton" onclick="changeProportions(0.53, 0.47); colorSelected(this.id)" value="Haus (53% / 47%)" name="calculate"
+                class="btn btn-success">
+                <input type="button" id="hausratButton" onclick="changeProportions(0.38, 0.62); colorSelected(this.id)" value="Hausrat (38% / 62%)" name="calculate"
+                class="btn btn-default">
 
 
 
@@ -116,7 +135,7 @@
                 <span class="input-group-addon" id="sequence2">Anteil Judith:</span>
                 <input id="judithamount" type="text" value="" class="form-control"
                 aria-describedby="sequence2">
-                <span class="input-group-addon" id="sequence2">53 &percnt;</span>
+                <span class="input-group-addon" id="showJudithPercent">53,00&percnt;</span>
             </div>
 
             <br>
@@ -124,7 +143,7 @@
                 <span class="input-group-addon" id="sequence2">Anteil Gerd:</span>
                 <input id="gerdamount" type="text" value="" class="form-control"
                 aria-describedby="sequence2">
-                <span class="input-group-addon" id="sequence2">47 &percnt;</span>
+                <span class="input-group-addon" id="showGerdPercent">47,00&percnt;</span>
             </div>
         </div>
     </div>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proporz Rechner">
+    <meta name="author" content="Marco Kemmerling">
+
+    <title>Interval Training</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <!-- 		   -->
+
+
+
+    <script type="text/javascript">
+    var strings = ["E", "A", "D", "G", "B", "E"]; 
+    var frets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; 
+    var positions = ["I", "II", "III", "IV", "V", "VI", "VII"];
+
+    function randomItem(array) {
+        return array[Math.floor(Math.random()*array.length)];
+    }
+
+    function generateProblem() {
+        var fret = document.getElementById("fret");           
+        var string = document.getElementById("string");           
+        var start = document.getElementById("start");           
+
+        fret.innerHTML = randomItem(frets); 
+        string.innerHTML = randomItem(strings); 
+        start.innerHTML = randomItem(positions);
+
+        var target = document.getElementById("target");           
+        target.innerHTML = randomItem(positions);
+    }
+   
+    </script>
+
+    <style>
+    span {        
+        font-family: monospace;
+        font-size: 55pt;
+        color: #E69E27;
+    }
+    body {
+        font-size: 60pt;
+    }
+    </style>
+
+</head>
+<body>
+    <!-- JQuery & Bootstrap script files -->
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#billamount').keypress(function(e){
+            if(e.keyCode==13)
+            $('#calcButton').click();
+        });
+    });
+
+    $(document).on("keypress", function (e) {
+        generateProblem();
+    });
+    </script>
+    <!-- 	-->
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1>
+
+                    <br>Interval Training
+                </h1>
+            </div>
+        </div>              
+                    
+                   
+
+        <br>
+        <div class="row">
+            Fret <span id="fret"></span> on the <span id="string"></span> string is your <span id="start"></span>
+        </div>
+        <br />
+        <div class="row" id="start"></div>
+        <br />
+        <div class="row">Play the <span id="target"></span></div>
+                
+
+
+
+ 
+
+
+    </div>
+
+
+</body>
+</html>

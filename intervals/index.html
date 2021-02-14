@@ -57,13 +57,14 @@
     <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        $('#billamount').keypress(function(e){
-            if(e.keyCode==13)
-            $('#calcButton').click();
-        });
+        generateProblem();
     });
 
     $(document).on("keypress", function (e) {
+        generateProblem();
+    });
+
+    $( document.body ).click(function() {
         generateProblem();
     });
     </script>

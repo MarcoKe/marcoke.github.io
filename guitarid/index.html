@@ -201,7 +201,7 @@
         document.getElementById('output').innerHTML = `Identified Guitar: <span class="prediction">${class_name}</span> <br /> Confidence: ${twoDecimals(arr[index])}`;
       } catch (error) {
         console.error('Error running the model:', error);
-        document.getElementById('output').textContent = 'Error running the model. Check the console for details.';
+        document.getElementById('output').textContent = error;
       }
     }
   </script>

@@ -74,15 +74,8 @@
 </head>
 <body>
 
-  <div class="upload-container">
-    <h2>Guitar Identifier</h2>
-    <p>Upload an image of a guitar to identify its model and make</p>
-
-    <label for="file-input" class="btn-upload">Click to Upload Guitar Image</label>
-    <input type="file" id="file-input" accept="image/*" onchange="handleImageUpload(event)">
-
-    <div id="image-preview"></div>
-    <div class="output" id="output"></div>
+  <div class="upload-container" id="entry">
+    
   </div>
 
   <!-- Bootstrap JS and dependencies -->
@@ -102,9 +95,11 @@
     async function initializeSession() {
       session = await ort.InferenceSession.create('http://kemmerling.me/guitarid_model_v0.0.1.onnx');
       console.log(session);
+      document.getElementById('entry').innerHTML = "<h2>Guitar Identifier</h2><p>Upload an image of a guitar to identify its model and make</p><label for='file-input' class='btn-upload'>Click to Upload Guitar Image</label><input type='file' id='file-input' accept='image/*' onchange='handleImageUpload(event)'><div id='image-preview'></div><div class='output' id='output'></div>";
     }
 
     initializeSession();
+
 
     function handleImageUpload(event) {
       const file = event.target.files[0];

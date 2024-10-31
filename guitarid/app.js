@@ -1,10 +1,10 @@
 let session;
 
-const classNames = ['Fender Player Stratocaster', 'Fender Player Telecaster', 'Gibson Les Paul Standard 50s', 'Ibanez RG370DX', 'Ibanez S6570SK', 'Jackson Soloist SL2', 'PRS SE Custom 24'];
+const classNames = ['Fender Stratocaster', 'Fender Telecaster', 'Gibson ES', 'Gibson Explorer', 'Gibson Firebird', 'Gibson Flying V', 'Gibson Les Paul', 'Gibson SG', 'Ibanez AS', 'Ibanez AZ', 'Ibanez RG', 'Ibanez RGA', 'Ibanez S', 'Mayones Duvell', 'Mayones Regius'];
 const modelOutputName = 'classifier_1';
 
 async function initializeSession() {
-  session = await ort.InferenceSession.create('http://kemmerling.me/guitarid_model_v0.0.1.onnx');
+  session = await ort.InferenceSession.create('http://kemmerling.me/guitarid_model_v0.1.1.onnx');
   console.log(session);
   document.getElementById('entry').innerHTML = "<h2>Guitar Identifier</h2><p>Upload an image of a guitar to identify its model and make</p><label for='file-input' class='btn-upload'>Click to Upload Guitar Image</label><input type='file' id='file-input' accept='image/*' onchange='handleImageUpload(event)'><div id='image-preview'></div><div class='output' id='output'></div>";
 }
